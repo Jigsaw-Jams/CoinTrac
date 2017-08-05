@@ -1,0 +1,27 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "Final project for CS 4550",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jigsaw-Jams/webdev_project.git"
+  },
+  "author": "DJ Strasser",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jigsaw-Jams/webdev_project/issues"
+  },
+  "homepage": "https://github.com/Jigsaw-Jams/webdev_project#readme",
+  "dependencies": {
+    "angular": "^1.6.5",
+    "angular-route": "^1.6.5",
+    "body-parser": "^1.17.2",
+    "bootstrap": "^3.3.7",
+    "express": "^4.15.3",
+    "mongoose": "^4.11.5"
+  }
+}

@@ -1,0 +1,23 @@
+<div class="container-fluid">
+
+    <h1>Coin Details Will Load Below When Ready</h1>
+
+    <hr>
+
+    <h3>{{model.coinDetails.id}}</h3>
+
+
+    <ul ng-show="model.coinDetails" style="padding: 0;">
+        <li ng-repeat="(key, value) in model.coinDetails" class="list-group-item">
+            <div class="row">
+                <div class="col-xs-4">
+                    {{key}}
+                </div>
+                <div class="col-xs-8">
+                    {{value}}
+                </div>
+            </div>
+        </li>
+    </ul>
+
+</div>
