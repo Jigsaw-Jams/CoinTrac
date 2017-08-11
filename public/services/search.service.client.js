@@ -1,6 +1,6 @@
 (function() {
     angular
-        .module("CoinTrak")
+        .module("CoinTrac")
         .factory("SearchService", SearchService);
 
     function SearchService($http) {
