@@ -1,14 +1,33 @@
-<div class="container-fluid">
-    <h1> CoinTrak</h1>
-    <p>The world's top crypto asset portfolio system.</p>
-    <div class="panel panel-success">
-        <div class="panel-heading">BTC PRICE</div>
-        <div class="panel-body">
-            <h2>${{model.bitcoin.price_usd}}</h2>
+<navbar></navbar>
+
+<div class="container">
+    <div ng-include src="'./views/home/templates/login-modal.view.client.html'"></div>
+    <div ng-include src="'./views/home/templates/signup-modal.view.client.html'"></div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ui-widget">
+                <input type="text" id="search" name="search" placeholder="SEARCH FOR A COIN">
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <h2 class="text-center">Top Twelve Currencies</h2>
+
+    <div class="row">
+        <div ng-repeat="coin in model.topTwelve" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <div class="panel" ng-class="{ 'panel-danger': coin.percent_change_24h < 0, 'panel-success': coin.percent_change_1h >= 0}">
+                <div class="panel-heading">{{coin.id | uppercase}} PRICE</div>
+                <div class="panel-body">
+                    <h2>${{coin.price_usd}}</h2>
+                </div>
+            </div>  
         </div>
     </div>
 
-    <h3>
-        <a href="#!/search"> <span class="glyphicon glyphicon-search"></span>&nbsp; Search</a>
-    </h3>
+    <hr>
+
+    <a href="#!/search"> <span class="glyphicon glyphicon-search"></span>&nbsp; Click here to search for any crypto asset.</a>    
+
 </div>
