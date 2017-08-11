@@ -1,6 +1,6 @@
 (function() {
     angular
-        .module("CoinTrak")     
+        .module("CoinTrac")     
         .config(configuration);
 
     function configuration($routeProvider) {

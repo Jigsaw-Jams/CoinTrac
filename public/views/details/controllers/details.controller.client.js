@@ -1,6 +1,6 @@
 (function() {
     angular
-        .module("CoinTrak")
+        .module("CoinTrac")
         .controller("DetailsController", DetailsController);
 
         function DetailsController(DetailsService, $routeParams) {
