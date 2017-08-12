@@ -6,6 +6,7 @@
         function HomeController($location, $scope, HomeService, UserService) {
             var model = this;
             model.createUser = createUser;
+            model.login = login;
 
             function init() {
                 // Get the entire definition of the top 12 currencies
@@ -59,7 +60,18 @@
                             });
                         }
                     });
+            }
 
+            function login(user) {
+                UserService
+                    .findUserByCredentials(user.email, user.password)
+                    .then(function (response) {
+                        var user = response.data;
+                        $('.modal').modal('hide');
+                        $location.url("/profile/" + user._id);
+                    }, function (err) {
+                        model.errorMessage = "Sorry the email and password combination were not found.";
+                    });
             }
 
 
