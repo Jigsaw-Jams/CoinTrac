@@ -31,19 +31,39 @@
             init();
 
 
-            // TODO: NOT SAFE NEEDS MORE WORK
             function createUser(user) {
+                // remove existing error classes
+                $('.form-group').removeClass('has-error');
                 UserService
-                    .createUser(user)
-                    .then(function (response) {
-                        console.log('created user check DB');
-                        var user = response.data;
-                        $('.modal').modal('hide');
-                        $location.url("/profile/" + user._id);
+                    .findUserByUsername(user.username)
+                    .then(function () {
+                        model.errorMessage = "Sorry this username is already taken, try another.";
+                        $('#signup-username').addClass('has-error');
+                    }, function (err) {
+                        // only do other validation if the username is not taken
+                        if (!user.email) {
+                            $('#signup-email').addClass('has-error');
+                            model.errorMessage = "Sorry you must use a valid email address.";
+                        } else if (user.password != user.password2) {
+                            $('#signup-password').addClass('has-error');
+                            $('#signup-password2').addClass('has-error');
+                            model.errorMessage = "Sorry the passwords do not match.";
+                        } else { // at this point user can be created
+                            UserService
+                            .createUser(user)
+                            .then(function (response) {
+                                console.log('created user check DB');
+                                var user = response.data;
+                                $('.modal').modal('hide');
+                                $location.url("/profile/" + user._id);
+                            });
+                        }
                     });
-                    
 
             }
+
+
+
 
         }
 })();

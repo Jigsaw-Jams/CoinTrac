@@ -6,6 +6,7 @@ var userModel = mongoose.model("UserModel", userSchema);
 // Create and export functions that cna be called on this model
 userModel.createUser = createUser;
 userModel.findUserByCredentials = findUserByCredentials;
+userModel.findUserByUsername = findUserByUsername;
 userModel.findUserById = findUserById;
 module.exports = userModel;
 
@@ -28,6 +29,16 @@ function createUser(user) {
  */
 function findUserByCredentials(email, password) {
     return userModel.findOne({email: email, password: password})
+}
+
+
+/**
+ * Find a user by their username
+ * 
+ * * @param {String} username    - user's username
+ */
+function findUserByUsername(username) {
+    return userModel.findOne({username: username});
 }
 
 

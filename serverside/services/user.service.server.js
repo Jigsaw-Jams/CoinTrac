@@ -15,6 +15,8 @@ function createUser(req, res) {
         .then(function (user) {
             res.send(user);
         }, function (err) {
+            console.log('error creating user');
+            console.log(err);
             res.sendStatus(500);
         });
 }
@@ -23,18 +25,36 @@ function createUser(req, res) {
 function findUserByCredentials(req, res) {
     var email = req.query.email;
     var password = req.query.password;
+    var username = req.query.username;
 
-    if (username && password) {
+    // username and password lookup
+    if (email && password) {
         userModel
             .findUserByCredentials(email, password)
             .then(function (user) {
-                res.send(user);
-            }, function () {
-                res.sendStatus(404);
-            })
-
-    } else {
-        res.sendStatus(404);
+                if (user != null) {
+                    res.send(user);
+                } else {
+                    res.sendStatus(404);    
+                }
+            }, function (err) {
+                console.log(err);
+                res.sendStatus(500);
+            });
+    // username only lookup 
+    } else if (username) {
+        userModel
+            .findUserByUsername(username)
+            .then(function (user) {
+                if (user != null) {
+                    res.send(user);
+                } else {
+                    res.sendStatus(404);    
+                }
+            }, function (err) {
+                console.log(err);
+                res.sendStatus(500);
+            });
     }
 }
 
