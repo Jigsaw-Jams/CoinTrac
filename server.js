@@ -1,6 +1,7 @@
 // app setup and module import -----------------------------------------
-const express = require('express');
-const app = express();
+var app = require('./express');
+var express = app.express;
+
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

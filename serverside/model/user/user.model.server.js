@@ -1,12 +1,41 @@
-var mongoose = require('mongoose');
+// Require dependencies and declare userModel
+var mongoose = require("mongoose");
+var userSchema = require("./user.schema.server");
+var userModel = mongoose.model("UserModel", userSchema); 
 
-var userSchema = mongoose.Schema(
-    {
-        email     : { type: String, unique: true, required: true },
-        username  : String,
-        password  : String,
-        //portfolios: [{ type: mongoose.Schema.Types.ObjectId, ref: "PortfolioModel"}],
-        //watchlists: [{ type: mongoose.Schema.Types.ObjectId, ref: "WatchlistModel"}],
-        created   : {type: Date, default: Date.now}
-    }
-)
+// Create and export functions that cna be called on this model
+userModel.createUser = createUser;
+userModel.findUserByCredentials = findUserByCredentials;
+userModel.findUserById = findUserById;
+module.exports = userModel;
+
+
+/**
+ * Insert a new user using the provided definition
+ * 
+ * @param {object} user - the user definition
+ */
+function createUser(user) {
+    return userModel.create(user);
+}
+
+
+/**
+ * Find a user in the db based on their email address and password
+ * 
+ * @param {String} email    - user's email
+ * @param {String} password - user's password
+ */
+function findUserByCredentials(email, password) {
+    return userModel.findOne({email: email, password: password})
+}
+
+
+/**
+ * Find a user based on their id
+ * 
+ * @param {*} userId 
+ */
+function findUserById(userId) {
+    return userModel.findById(userId);
+}

@@ -23,5 +23,11 @@
                 controller: "DetailsController",
                 controllerAs: "model"
             })
+            // ------ Profile ----------
+            .when("/profile/:userId", {
+                templateUrl : "views/user/templates/profile.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model"
+            });
     }
 })();
