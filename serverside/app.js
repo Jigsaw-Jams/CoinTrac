@@ -18,3 +18,4 @@ module.exports = db;
 
 // require all services
 require("./services/user.service.server")
+require("./services/holding.service.server")

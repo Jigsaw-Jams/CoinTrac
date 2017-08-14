@@ -24,18 +24,17 @@
             <div class="panel" ng-class="{ 'panel-danger': coin.percent_change_24h < 0, 'panel-success': coin.percent_change_24h >= 0}">
                 <div class="panel-heading">
                     {{coin.id | uppercase}}
-                    {{coin.percent_change_24h}}
                     <div class="pull-right">[{{coin.symbol | uppercase}}]</div>
                 </div>
                 <div class="panel-body">
                     <h2>${{coin.price_usd}}</h2>
+                    <strong ng-class="{ 'text-danger': coin.percent_change_24h < 0, 'text-success': coin.percent_change_24h >= 0}">[{{coin.percent_change_24h}}%]</strong>
+                    
                 </div>
             </div>  
         </div>
     </div>
 
     <hr>
-
-    <a href="#!/search"> <span class="glyphicon glyphicon-search"></span>&nbsp; Click here to search for any crypto asset.</a>    
 
 </div>
