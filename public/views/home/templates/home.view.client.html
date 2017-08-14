@@ -12,9 +12,13 @@
         </div>
     </div>
     <hr>
+    
+    <portfolio></portfolio>
+
+    <hr>
 
     <h2 class="text-center">Top Twelve Currencies in USD</h2>
-
+    
     <div class="row">
         <div ng-repeat="coin in model.topTwelve" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
             <div class="panel" ng-class="{ 'panel-danger': coin.percent_change_24h < 0, 'panel-success': coin.percent_change_24h >= 0}">

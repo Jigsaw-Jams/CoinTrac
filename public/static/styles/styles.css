@@ -3,7 +3,9 @@ body {
 }
 
 
-/* SEARCH BAR */
+/*
+    SEARCH BAR
+*/
 #search {
     width: 210px;
     box-sizing: border-box;
@@ -19,21 +21,10 @@ body {
 }
 
 
-.parent {
-    display: table;
-    table-layout: fixed;
-}
 
-.child {
-    display:table-cell;
-    vertical-align:middle;
-    text-align:right;
-    width:100%;
-}
-
-
-
-/* STOP NAVBAR FROM COLLAPSING */
+/*
+    STOP NAVBAR FROM COLLAPSING
+*/
 .navbar-collapse.collapse {
     display: block!important;
 }
@@ -54,3 +45,81 @@ body {
     cursor:pointer;
 }
 
+
+/* 
+    Better nav-tab in panel headings
+    https://bootsnipp.com/snippets/featured/panels-with-nav-tabs
+*/
+.panel.with-nav-tabs .panel-heading{
+    padding: 5px 5px 0 5px;
+}
+.panel.with-nav-tabs .nav-tabs{
+	border-bottom: none;
+}
+.panel.with-nav-tabs .nav-justified{
+	margin-bottom: -1px;
+}
+
+
+
+/*
+Bootstrap button outline override
+This is a Bootstrap 4 feature. I found at Bootsnipp
+Credits: https://bootsnipp.com/snippets/featured/bootstrap-outline-buttons
+*/
+.btn-outline {
+    background-color: transparent;
+    color: inherit;
+    transition: all .5s;
+}
+
+.btn-primary.btn-outline {
+    color: #428bca;
+    background: none;
+}
+
+.btn-success.btn-outline {
+    color: #5cb85c;
+    background: none;
+}
+
+.btn-info.btn-outline {
+    color: #5bc0de;
+    background: none;
+}
+
+.btn-warning.btn-outline {
+    color: #f0ad4e;
+    background: none;
+}
+
+.btn-danger.btn-outline {
+    color: #d9534f;
+    background: none;
+}
+
+.btn-primary.btn-outline:hover,
+.btn-success.btn-outline:hover,
+.btn-info.btn-outline:hover,
+.btn-warning.btn-outline:hover,
+.btn-danger.btn-outline:hover {
+    color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.inline-header {
+    display: inline;
+}
