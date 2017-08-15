@@ -8,7 +8,6 @@
 <div class="panel panel-default with-nav-tabs">
  
     <div class="panel-body">
-        <!-- <div role="tabpanel" class="tab-pane active" id="home">home {{portfolioModel.boo}}</div> -->
 
         <table ng-show="portfolioModel.holdings.length" class="table">
             <thead>
@@ -16,6 +15,7 @@
                     <th>COIN</th>
                     <th>PRICE</th>
                     <th>AMOUNT</th>
+                    <th>edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +26,7 @@
                     </td>
                     <td>${{holding.fiatPerCoin}}</td>
                     <td>{{holding.amount}}</td>
+                    <td><button class="btn btn-xs btn-warning">Edit</button></td>
                 </tr>
             </tbody>
         </table>
@@ -34,8 +35,8 @@
     </div>
 
 
-
-    <!-- Add Coin Modal -->
+    <!--  //////////////////// REUSABLE MODAL /////////////////////  -->
+    <!-- Add New Coin Modal -->
     <div class="modal fade" id="add-coin-modal"  role="dialog">
         <div class="modal-dialog modal-add-coin" role="document">
             <div class="modal-content">
@@ -83,6 +84,7 @@
             </div><!-- /modal-content -->
         </div>
     </div>
+    <!--  /////////////////////////////////////////////////////////  -->
 
 
 </div>

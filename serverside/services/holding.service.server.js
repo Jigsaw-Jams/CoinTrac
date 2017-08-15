@@ -21,7 +21,6 @@ function createHolding(req, res) {
 }
 
 function findHoldingsForUser(req, res) {
-    console.log(req);
     var userId = req.params.userId;
 
     holdingModel
