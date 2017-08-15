@@ -7,7 +7,7 @@ body {
     SEARCH BAR
 */
 #search {
-    width: 210px;
+    width: 215px;
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px;
@@ -72,32 +72,21 @@ Credits: https://bootsnipp.com/snippets/featured/bootstrap-outline-buttons
     color: inherit;
     transition: all .5s;
 }
-
 .btn-primary.btn-outline {
     color: #428bca;
-    background: none;
 }
-
 .btn-success.btn-outline {
     color: #5cb85c;
-    background: none;
 }
-
 .btn-info.btn-outline {
     color: #5bc0de;
-    background: none;
 }
-
 .btn-warning.btn-outline {
     color: #f0ad4e;
-    background: none;
 }
-
 .btn-danger.btn-outline {
     color: #d9534f;
-    background: none;
 }
-
 .btn-primary.btn-outline:hover,
 .btn-success.btn-outline:hover,
 .btn-info.btn-outline:hover,
@@ -107,6 +96,12 @@ Credits: https://bootsnipp.com/snippets/featured/bootstrap-outline-buttons
 }
 
 
+/**
+    Smaller modal for add coin
+*/
+body .modal-add-coin {
+    width: 400px;
+}
 
 
 
@@ -115,9 +110,9 @@ Credits: https://bootsnipp.com/snippets/featured/bootstrap-outline-buttons
 
 
 
-
-
-
+.alert-no-btm-margin {
+    margin-bottom: 0px;
+}
 
 
 .inline-header {
