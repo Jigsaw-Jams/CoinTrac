@@ -1,24 +1,88 @@
 <div>
     <h2 class='inline-header'>Portfolio</h2>
-    <button ng-click="portfolioModel.createHolding()" class="pull-right btn btn-success btn-outline">+ Add a Coin</button>
+    <button data-toggle="modal" data-target="#add-coin-modal" class="pull-right btn btn-success btn-outline">+ Add a Coin</button>
 </div>
 
 <br>
 
 <div class="panel panel-default with-nav-tabs">
-    <!-- Default panel contents -->
-    <div class="panel-heading">
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="" data-target="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-            <li role="presentation">               <a href="" data-target="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-        </ul>
-    </div>
+ 
     <div class="panel-body">
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="home">home</div>
-            <div role="tabpanel" class="tab-pane" id="profile">profile</div>
-        </div>            
+        <!-- <div role="tabpanel" class="tab-pane active" id="home">home {{portfolioModel.boo}}</div> -->
+
+        <table ng-show="portfolioModel.holdings.length" class="table">
+            <thead>
+                <tr>
+                    <th>COIN</th>
+                    <th>PRICE</th>
+                    <th>AMOUNT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="holding in portfolioModel.holdings">
+                    <td>
+                        <img ng-src="https://files.coinmarketcap.com/static/img/coins/16x16/{{holding.coinId}}.png" alt="i" />
+                        {{holding.coinId}}
+                    </td>
+                    <td>${{holding.fiatPerCoin}}</td>
+                    <td>{{holding.amount}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div ng-show="!portfolioModel.holdings.length" class="alert alert-success alert-no-btm-margin">Begin ypur portfolio by adding coin holdings.</div>
     </div>
+
+
+
+    <!-- Add Coin Modal -->
+    <div class="modal fade" id="add-coin-modal"  role="dialog">
+        <div class="modal-dialog modal-add-coin" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="add-coin-modal-label">Add a Coin</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div ng-show="portfolioModel.errorMessage" class="alert alert-danger"> <strong>{{portfolioModel.errorMessage}}</strong> </div>
+
+        
+
+                    <div class="ui-widget ui-front">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <img src="{{portfolioModel.imgsrc}}"/>
+                                    <i ng-hide="portfolioModel.imgsrc" class="fa fa-ellipsis-h"></i>
+                                </span>
+                                <input ng-model="portfolioModel.newHolding.coinId" ng-disabled="portfolioModel.imgsrc" type="text" id="coin-name" name="coin-name" placeholder="Enter coin name" class="form-control" ></input>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-hashtag"></i></span>
+                            <input ng-model="portfolioModel.newHolding.amount" type="number" id="coin-amount" name="coin-amount" placeholder="Amount of coin" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-usd"></span></span>
+                            <input ng-model="portfolioModel.newHolding.fiatPerCoin" type="number" id="coin-price" name="coin-price" placeholder="Price per coin" class="form-control" >
+                        </div>
+                    </div>
+                </div> <!-- /modal-body -->
+
+                <div class="modal-footer">
+                    <button ng-click="portfolioModel.createHolding(portfolioModel.newHolding)" ng-disabled="!portfolioModel.imgsrc" type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Add coin.</button>
+                </div>
+
+            </div><!-- /modal-content -->
+        </div>
+    </div>
+
+
 </div>

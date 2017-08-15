@@ -29,14 +29,17 @@
                     var coins = response.data;
                     var searchSource = [];
 
+                    // build the array of search result objects
                     for (coin in coins) {
                         currentCoin = coins[coin];
                         var id = currentCoin['id'];
                         var symbol = currentCoin['symbol'].toUpperCase();
 
                         var searchResult = {
-                            'id'   : id,
-                            'label': `${id} [${symbol}]`
+                            // 'id'   : id, // TODO WHY WAS THIS HERE IT BROKE SOMETHING
+                            'value': id,                  //used as the input value
+                            'label': `${id} [${symbol}]`, //displayed in the autocomplete dropdown
+                            'imgsrc' : `https://files.coinmarketcap.com/static/img/coins/16x16/${id}.png`
                         }
 
                         searchSource.push(searchResult);
@@ -45,48 +48,6 @@
                     return searchSource;
                 });
         }
-        // function getBitcoin() {
-        //     var url = "https://api.coinmarketcap.com/v1/ticker/bitcoin/";
-        //     return $http.get(url);
-        // }
-
-        // var api = {
-        //     "getBitcoin" : getBitcoin,
-        //     "getCoinById": getCoinById,
-        //     "getCoinsBySupply": getCoinsBySupply
-        // };
-        // return api;
-
-        // /**
-        //  * Get the coin with the specificed @coinId
-        //  * 
-        //  * @param {*} coinId 
-        //  */
-        // function getCoinById(coinId) {
-        //     for (var c in coins) {
-        //         if(coins[c].id === coinId) {
-        //             return coins[c];
-        //         }
-        //     }
-        // }
-
-
-        // /**
-        //  * Get all coins with a supply above @supply
-        //  * 
-        //  * @param {number} supply 
-        //  */
-        // function getCoinsBySupply(supply) {
-        //     var result = [];
-
-        //     for (var c in coins) {
-        //         if(coins[c].available_supply >= supply) {
-        //             result.push(coins[c]);
-        //         }
-        //     }
-
-        //     return result; 
-        // }
-
+     
     }
 })();

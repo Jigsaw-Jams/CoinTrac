@@ -21,7 +21,7 @@
                         $("#search").autocomplete({
                             source: searchSource,
                             select: function(event, ui) {
-                                var id = ui.item.id;
+                                var id = ui.item.value;
                                 $location.url('/details/' + id);
                                 $scope.$apply(); // block is not triggered by part of angular so requires apply to execute
                             }
