@@ -8,7 +8,8 @@
             "createUser"   : createUser,
             "login" : login,
             "findUserByUsername" : findUserByUsername,
-            "findUserById" : findUserById
+            "findUserById" : findUserById,
+            "checkLogin" : checkLogin
         };
         return api;
 
@@ -36,6 +37,15 @@
         function findUserById(userId) {
             var url = `/api/v1/user/${userId}`;
             return $http.get(url);
+        }
+
+        //TODO UNRWAP RESPONSEES
+        function checkLogin() {
+            var url = `/api/v1/checkLogin`;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
         }
     }
 })();

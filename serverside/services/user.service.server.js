@@ -10,9 +10,10 @@ passport.deserializeUser(deserializeUser);
 // API Endpoints and their corresponding functions //
 app.post("/api/v1/user", createUser);
 app.post("/api/v1/login", passport.authenticate('local'), login);
+app.post("/api/v1/logout", logout);
+app.get ("/api/v1/checkLogin", checkLogin);
 app.get ("/api/v1/user", findUser);
 app.get ("/api/v1/user/:userId", findUserById);
-
 
 
 function localStrategy(email, password, done) {
@@ -67,6 +68,15 @@ function login(req, res) {
     res.send(user);
 }
 
+function logout(req, res) {
+    req.logOut();
+    res.sendStatus(200);
+}
+
+function checkLogin(req, res) {
+    // if authenticated return user, otherwise 0
+    res.send(req.isAuthenticated() ? req.user: '0');
+}
 
 
 
