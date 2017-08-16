@@ -69,7 +69,7 @@
 
             function login(user) {
                 UserService
-                    .findUserByCredentials(user.email, user.password)
+                    .login(user.email, user.password)
                     .then(function (response) {
                         var user = response.data;
                         $('.modal').modal('hide');

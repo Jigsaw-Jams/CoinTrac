@@ -2,11 +2,24 @@
 var app = require('./express');
 var express = app.express;
 
-var bodyParser = require('body-parser');
+var bodyParser    = require('body-parser');
+var passport      = require('passport');
+var cookieParser  = require('cookie-parser');
+var session       = require('express-session');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // serve static files from the /public directory
 app.use(express.static(__dirname + '/public'));
+// initialize session 
+app.use(session({
+    secret: process.env.COINTRAC_SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 // Run the serverside Node app

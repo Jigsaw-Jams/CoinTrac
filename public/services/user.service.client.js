@@ -6,7 +6,7 @@
     function UserService($http) {
         var api = {
             "createUser"   : createUser,
-            "findUserByCredentials" : findUserByCredentials,
+            "login" : login,
             "findUserByUsername" : findUserByUsername,
             "findUserById" : findUserById
         };
@@ -18,10 +18,15 @@
             return $http.post(url, user);
         }
 
-        function findUserByCredentials(email, password) {
-            var url = "/api/v1/user?email=" + email + "&password=" + password;
-            return $http.get(url);
+        function login(email, password) {
+            var url = "/api/v1/login";
+            return $http.post(url, {email: email, password: password});
         }
+
+        // function findUserByCredentials(email, password) {
+        //     var url = "/api/v1/user?email=" + email + "&password=" + password;
+        //     return $http.get(url);
+        // }
 
         function findUserByUsername(username) {
             var url =  "/api/v1/user?username=" + username;
