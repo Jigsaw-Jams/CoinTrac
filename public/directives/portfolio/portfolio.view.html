@@ -1,5 +1,5 @@
 <div>
-    <h2 class='inline-header'>Portfolio</h2>
+    <h2 class='inline-header'>Portfolio</h2> 
     <button data-toggle="modal" data-target="#add-coin-modal" class="pull-right btn btn-success btn-outline">+ Add a Coin</button>
 </div>
 
@@ -7,6 +7,10 @@
 
 <div class="panel panel-default with-nav-tabs">
  
+    <div class="panel-heading">
+        <h4><strong>Value: </strong> {{ portfolioModel.portfolioValue | currency : "$USD" : 3}}</h4>
+    </div>
+
     <div class="panel-body">
 
         <table ng-show="portfolioModel.holdings.length" class="table">

@@ -3,7 +3,7 @@
         .module("coinTracDirectives")
         .controller("PortfolioController", PortfolioController);
 
-        function PortfolioController($scope, HoldingService, HomeService) {
+        function PortfolioController($scope, HoldingService, HomeService, DetailsService) {
             var portfolioModel = this;
             
             portfolioModel.createHolding = createHolding;
@@ -17,14 +17,19 @@
                 // I am currently just disabling the input field for validation
                 $(document).ready(function () {
                     $('.modal').on('hidden.bs.modal', function(e) { 
-                        portfolioModel.holding = null;
+                        // portfolioModel.holding = null;
                         portfolioModel.imgsrc = null;
                         $scope.$apply();
                     });
                 });
 
-                /** Find the current user's holdings  **/
-                findHoldingsForUser();
+                /** Find the current user's holdings then calc portfolio value **/
+                findHoldingsForUser()
+                    .then(function (d) {
+                        calculatePortfolioValue();
+                    })
+                    
+
 
                 /* Get all available coins for the search/autocomplete functionality */
                 HomeService
@@ -65,6 +70,7 @@
                         portfolioModel.newHolding = null;
                         portfolioModel.imgsrc = null;
                         findHoldingsForUser();
+                        calculatePortfolioValue();
                     }, function (err) {
                         console.log(err);
                     });
@@ -79,18 +85,44 @@
             function findHoldingsForUser() {
                 // Only display holdings if there is a user currently logged in
                 if (portfolioModel.currentUser != null) {
-                    HoldingService
+                    return HoldingService
                         .findHoldingsForUser(portfolioModel.currentUser._id)
                         .then(function (holdings) {
-                            portfolioModel.holdings = holdings.data;
-                            console.log(portfolioModel);
-                            console.log('holdings loaded for user');
+                            // return holdings.data;
+                            if (holdings.data.length) {
+                                portfolioModel.holdings = holdings.data;
+                            }
                         });
                 } else { //TODO BAD
-                    console.log('no user')
+                    console.log('no user');
+                    return;
                 }
             }
 
+
+            function calculatePortfolioValue() {
+                console.log('ready');
+                var total = 0;
+                var promises = [];
+
+                for (h in portfolioModel.holdings) {
+                    console.log('set');
+                    promises.push(DetailsService
+                        .getCoinDetails(portfolioModel.holdings[h].coinId)
+                        .then(function (data) {
+                            var amount = portfolioModel.holdings[h].amount;
+                            var price = data.price_usd;
+                            total = total + (amount * price);
+                        })
+                    );
+                }
+            
+                return Promise.all(promises)
+                    .then(function(data) {
+                        portfolioModel.portfolioValue = total;
+                    });
+
+            }
 
         }
 })();

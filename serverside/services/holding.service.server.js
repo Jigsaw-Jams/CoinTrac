@@ -41,3 +41,7 @@ function findHoldingsForUser(req, res) {
 function deleteHolding(req, res) {
 
 }
+
+function updateHolding(req, res) {
+
+}
