@@ -14,6 +14,9 @@ app.post("/api/v1/logout", logout);
 app.get ("/api/v1/checkLogin", checkLogin);
 app.get ("/api/v1/user", findUser);
 app.get ("/api/v1/user/:userId", findUserById);
+app.put ("/api/v1/user/:userId", updateUser);
+app.delete("/api/v1/user/:userId", deleteUser);
+
 
 
 function localStrategy(email, password, done) {
@@ -98,37 +101,6 @@ function findUser(req, res) {
                 res.sendStatus(500);
             });
     }
-    
-
-    // username and password lookup
-    // if (email && password) {
-    //     userModel
-    //         .findUserByCredentials(email, password)
-    //         .then(function (user) {
-    //             if (user != null) {
-    //                 res.send(user);
-    //             } else {
-    //                 res.sendStatus(404);    
-    //             }
-    //         }, function (err) {
-    //             console.log(err);
-    //             res.sendStatus(500);
-    //         });
-    // // username only lookup 
-    // } else if (username) {
-    //     userModel
-    //         .findUserByUsername(username)
-    //         .then(function (user) {
-    //             if (user != null) {
-    //                 res.send(user);
-    //             } else {
-    //                 res.sendStatus(404);    
-    //             }
-    //         }, function (err) {
-    //             console.log(err);
-    //             res.sendStatus(500);
-    //         });
-    // }
 }
 
 
@@ -141,5 +113,33 @@ function findUserById(req, res) {
             res.send(user);
         }, function () {
             sendStatus(404);
+        });
+}
+
+function updateUser(req, res) {
+    var userId = req.params.userId;
+    var user = req.body;
+
+    userModel
+        .updateUser(userId, user)
+        .then(function (user) {
+            res.send(user);
+        }, function(err) {
+            console.log(err);
+            res.sendStatus(500);
+        })
+}
+
+
+function deleteUser(req, res) {
+    var userId = req.params.userId;
+
+    userModel
+        .deleteUser(userId)
+        .then(function (user) {
+            res.sendStatus(200);
+        }, function(err) {
+            console.log(err);
+            res.sendStatus(500);
         });
 }

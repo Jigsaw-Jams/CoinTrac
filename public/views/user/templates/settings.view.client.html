@@ -42,15 +42,25 @@
     </div>
 
 
-    <button class="btn btn-outline btn-primary btn-block">Update!</button>
+    <button ng-click="model.updateUser(model.currentUser._id, model.currentUser)" class="btn btn-outline btn-primary btn-block">Update!</button>
 
     <br>
 
     <div class="panel panel-default">
         <div class="panel-body">
-            Thanks for being a member <span class="glyphicon glyphicon-heart"></span>
-            <br>
-            Member since: {{model.currentUser.created | date : format : short}}
+            <div class="row">
+                <div class="col-sm-10">
+                    Thanks for being a member <span class="glyphicon glyphicon-heart"></span>
+                    <br>
+                    Member since: {{model.currentUser.created | date : format : short}}
+                </div>
+                <div class="col-sm-2 pull-right">
+                    <!-- <a type="button" data-toggle="modal" data-target="#login-modal">Log in</a> -->
+                    <button  data-toggle="modal" data-target="#delete-modal" class="btn btn-outline btn-danger">Delete Account</button>
+                </div>
+            </div>
         </div>
     </div>
+
+    <div ng-include src="'./views/user/templates/delete-modal.view.client.html'"></div>
 </div>

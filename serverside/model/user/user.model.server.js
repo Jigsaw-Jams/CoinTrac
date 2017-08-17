@@ -9,6 +9,8 @@ userModel.findUserByCredentials = findUserByCredentials;
 userModel.findUserByUsername = findUserByUsername;
 userModel.findUserById = findUserById;
 userModel.addHolding = addHolding;
+userModel.updateUser = updateUser;
+userModel.deleteUser = deleteUser;
 module.exports = userModel;
 
 
@@ -67,4 +69,22 @@ function addHolding(userId, holdingId) {
             user.portfolio.push(holdingId);
             return user.save();
         });
+}
+
+/**
+ * Update the user with the given userId
+ * 
+ * @param {*} userId - the userId to update
+ * @param {*} user - the new user definition
+ */
+function updateUser(userId, user) {
+    return userModel.update({_id: userId}, {$set: user});
+}
+
+/**
+ * Delete the user with the given userId
+ * @param {*} userId - the userId to delete
+ */
+function  deleteUser(userId) {
+    return userModel.remove({_id: userId});
 }

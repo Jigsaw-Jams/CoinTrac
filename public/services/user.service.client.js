@@ -10,7 +10,9 @@
             "logout": logout,
             "findUserByUsername" : findUserByUsername,
             "findUserById" : findUserById,
-            "checkLogin" : checkLogin
+            "checkLogin" : checkLogin,
+            "updateUser" : updateUser,
+            "deleteUser" : deleteUser
         };
         return api;
 
@@ -50,6 +52,19 @@
                 .then(function (response) {
                     return response.data;
                 });
+        }
+
+        function updateUser(userId, user) {
+            var url = `/api/v1/user/${userId}`;
+            return $http.put(url, user)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+        
+        function deleteUser(userId) {
+            var url = `/api/v1/user/${userId}`;
+            return $http.delete(url);
         }
     }
 })();

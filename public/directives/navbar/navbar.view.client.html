@@ -41,6 +41,7 @@
                         <li><a href="#!/">Dashboard</a></li>
                         <li><a href="#!/profile">Profile</a></li>
                         <li><a href="#!/settings">Settings</a></li>
+                        <li ng-show="navbarModel.currentUser.isAdmin"><a href="#!/manage">Manage users</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a ng-click="navbarModel.logout()">Sign Out</a></li>
                     </ul>
@@ -53,4 +54,3 @@
 
 <div ng-include src="'./directives/navbar/login-modal.view.client.html'"></div>
 <div ng-include src="'./directives/navbar/signup-modal.view.client.html'"></div>
-<!-- <div ng-include src="'./views/home/templates/signup-modal.view.client.html'"></div> -->
