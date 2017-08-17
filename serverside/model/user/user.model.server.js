@@ -7,6 +7,8 @@ var userModel = mongoose.model("UserModel", userSchema);
 userModel.createUser = createUser;
 userModel.findUserByCredentials = findUserByCredentials;
 userModel.findUserByUsername = findUserByUsername;
+userModel.findUserByEmail = findUserByEmail;
+userModel.findUserByGoogleId = findUserByGoogleId;
 userModel.findUserById = findUserById;
 userModel.addHolding = addHolding;
 userModel.updateUser = updateUser;
@@ -44,6 +46,15 @@ function findUserByUsername(username) {
     return userModel.findOne({username: username});
 }
 
+/**
+ * Find a user by their Google ID
+ * 
+ * @param {String} googleId - users google id 
+ */
+function findUserByGoogleId(googleId) {
+   return userModel.findOne({'google.id': googleId});
+}
+
 
 /**
  * Find a user based on their id
@@ -52,6 +63,15 @@ function findUserByUsername(username) {
  */
 function findUserById(userId) {
     return userModel.findById(userId);
+}
+
+/**
+ * Find a user based on their email
+ * 
+ * @param {*} email 
+ */
+function findUserByEmail(email) {
+    return userModel.findOne({email: email});
 }
 
 

@@ -10,7 +10,7 @@
       <div class="modal-body">
 
             <div class="form-group">
-                <div ng-show="navbarModel.loginErrorMessage" class="alert alert-danger"> <strong>{{navbarModel.errorMessage}}</strong> </div>
+                <div ng-show="navbarModel.loginErrorMessage" class="alert alert-danger"> <strong>{{navbarModel.loginErrorMessage}}</strong> </div>
                 <div class="input-group">
                     <span class="input-group-addon">@</span>
                     <input ng-model="navbarModel.user.email"
@@ -37,6 +37,11 @@
       </div>
 
       <div class="modal-footer">
+        <div class="pull-left">
+          <a href="/auth/google" class="btn btn-danger btn-block">
+            <span class="fa fa-google-plus"></span> Login w/Google
+          </a>
+        </div>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         <button ng-click="navbarModel.login(navbarModel.user)" type="button" class="btn btn-primary">Login!</button>
       </div>

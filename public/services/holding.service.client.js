@@ -25,13 +25,11 @@
 
 
         function updateHolding(holdingId, holding) {
-            console.log('update dat sh');
             var url = "/api/v1/holding/" + holdingId;
             return $http.put(url, holding);
         }
 
         function deleteHolding(holdingId) {
-            console.log('del that sh');
             var url = "/api/v1/holding/" + holdingId;
             return $http.delete(url);
         }

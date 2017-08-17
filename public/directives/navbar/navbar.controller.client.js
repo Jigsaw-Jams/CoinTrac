@@ -5,12 +5,11 @@
 
         function NavbarController(UserService, $location, $rootScope, $scope, $route) {
             var navbarModel = this;
-            // functions
             navbarModel.login = login;
             navbarModel.logout = logout;
             navbarModel.createUser = createUser;
+
             function init() {
-                console.log($rootScope.currentUser)
                 navbarModel.currentUser = $rootScope.currentUser;
             }
             init();
@@ -38,6 +37,7 @@
                                 UserService
                                     .createUser(user)
                                     .then(function (response) {
+                                        $rootScope.currentUser = response.data;
                                         login(user);
                                         $('.modal').modal('hide');
                                     });                          

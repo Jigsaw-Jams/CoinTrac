@@ -19,6 +19,7 @@
   "dependencies": {
     "angular": "^1.6.5",
     "angular-route": "^1.6.5",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.2",
     "bootstrap": "^3.3.7",
     "cookie-parser": "^1.4.3",
@@ -27,6 +28,7 @@
     "jdenticon": "^1.7.2",
     "mongoose": "^4.11.5",
     "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",
     "q": "^1.5.0"
   }

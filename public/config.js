@@ -9,7 +9,10 @@
            .when("/", {
                 templateUrl : "views/home/templates/home.view.client.html",
                 controller: "HomeController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    currentUser: getCurrentUser
+                }
             })
             // -------- Search --------
             .when("/search", {
@@ -45,21 +48,21 @@
 
             // Return the currently logged in user, for changing context of things that can
             // be viewed by registered and unregisterd users. If no user page will load with result null
-            // function getCurrentUser(UserService, $q) {
-            //     var deferred = $q.defer();
+            function getCurrentUser(UserService, $q) {
+                var deferred = $q.defer();
                 
-            //     UserService
-            //         .checkLogin()
-            //         .then(function (user) {
-            //             if(user === '0') {
-            //                 deferred.resolve(null);
-            //             } else {
-            //                 deferred.resolve(user);
-            //             }
-            //         });
+                UserService
+                    .checkLogin()
+                    .then(function (user) {
+                        if(user === '0') {
+                            deferred.resolve(null);
+                        } else {
+                            deferred.resolve(user);
+                        }
+                    });
                 
-            //     return deferred.promise;
-            // }
+                return deferred.promise;
+            }
 
 
             // Redirect the the home page if the user is not currently logged in

@@ -9,6 +9,10 @@ var userSchema = mongoose.Schema(
         preferredCurrency: String,
         portfolio        : [{ type: mongoose.Schema.Types.ObjectId, ref: "HoldingModel"}],
         twitterHandle    : String,
+        google: {
+            id: String,
+            token: String
+        },
         //watchlists       : [{ type: mongoose.Schema.Types.ObjectId, ref: "WatchlistModel"}],
         created          : {type: Date, default: Date.now}
     },

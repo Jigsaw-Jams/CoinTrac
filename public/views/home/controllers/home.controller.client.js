@@ -3,13 +3,13 @@
         .module("CoinTrac")
         .controller("HomeController", HomeController);
 
-        function HomeController($location, $rootScope, $scope, HomeService, UserService) {
+        function HomeController($location, $rootScope, $scope, currentUser, HomeService, UserService) {
             var model = this;
-            model.currentUser = $rootScope.currentUser;
-            // model.loggedin = currentUser ? true : false;
 
             function init() {
-                $rootScope.yomama = 'asdf';
+                $rootScope.currentUser = currentUser;
+                model.currentUser = $rootScope.currentUser;
+                
                 // Get the entire definition of the top 12 currencies
                 HomeService.getCoins(12)
                     .then(function (coins) {

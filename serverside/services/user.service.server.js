@@ -1,33 +1,81 @@
 var app = require("../../express");
 var userModel = require("../model/user/user.model.server");
+var bcrypt = require("bcrypt-nodejs");
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 // tells passport to use LocalStrategy, and implement with localStrategy fxn
 passport.use(new LocalStrategy({usernameField:"email", passwordField:"password"}, localStrategy));
+// tell passport to use the GoogleStrategy and implement ussing googleConfig & googleStrategy fxn
 passport.serializeUser(serializeUser);
 passport.deserializeUser(deserializeUser);
 
 // API Endpoints and their corresponding functions //
-app.post("/api/v1/user", createUser);
-app.post("/api/v1/login", passport.authenticate('local'), login);
-app.post("/api/v1/logout", logout);
-app.get ("/api/v1/checkLogin", checkLogin);
-app.get ("/api/v1/user", findUser);
-app.get ("/api/v1/user/:userId", findUserById);
-app.put ("/api/v1/user/:userId", updateUser);
+app.post  ("/api/v1/user", createUser);
+app.post  ("/api/v1/login", passport.authenticate('local'), login);
+app.post  ("/api/v1/logout", logout);
+app.get   ("/api/v1/checkLogin", checkLogin);
+app.get   ("/api/v1/user", findUser);
+app.get   ("/api/v1/user/:userId", findUserById);
+app.put   ("/api/v1/user/:userId", updateUser);
 app.delete("/api/v1/user/:userId", deleteUser);
+app.get   ("/auth/google", passport.authenticate('google', {scope : ['profile', 'email']}));
+// app.get   ("/google/callback", passport.authenticate('google'), login);
+app.get   ("/google/callback", 
+    passport.authenticate('google', {
+        successRedirect: "/#!/",
+        failureRedirect: "/#!/",
+    }));
 
 
+var googleConfig = {
+    clientID     : process.env.GOOGLE_CLIENT_ID,
+    clientSecret : process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL  : process.env.GOOGLE_CALLBACK_URL
+};
+
+passport.use(new GoogleStrategy(googleConfig, googleStrategy));
+function googleStrategy(token, refreshToken, profile, done) {
+    userModel
+        .findUserByGoogleId(profile.id)
+        .then(function (user) {
+            if (user) {
+                return done(null, user);
+            } else {
+                var email = profile.emails[0].value;
+                var emailParts = email.split("@");
+                var newGoogleUser = {
+                    email: email,
+                    isAdmin: false,
+                    username: emailParts[0],
+                    preferredCurrency: 'USD',
+                    google: {
+                        id: profile.id,
+                        token: token
+                    }
+                }
+            };
+            return userModel.createUser(newGoogleUser)
+        }, function (err) {
+            console.log(err);
+        })
+        .then(function (user) {
+            return done(null, user);
+        }, function (err) {
+            if (err) { return done(err); }
+        });
+}
 
 function localStrategy(email, password, done) {
     // passport will ignore all attributes besides exactly, email & password
+    
     userModel
-        .findUserByCredentials(email, password)
+        .findUserByEmail(email)
         .then(function (user) {
             if (!user) { //invalid user
                 // done supplies passport with the user, (or false if failed)
                 return done(null, false);
-            } else {     //valid user
+            } else if (user && bcrypt.compareSync(password, user.password)) {
                 return done(null, user);
             }
         }, function (err) {
@@ -54,6 +102,10 @@ function deserializeUser(user, done) {
 
 function createUser(req, res) {
     var user = req.body;
+
+    //encrypt password
+    user.password = bcrypt.hashSync(user.password);
+    
 
     userModel
         .createUser(user)
