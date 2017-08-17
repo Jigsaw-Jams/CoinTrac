@@ -22,6 +22,7 @@ function localStrategy(email, password, done) {
         .findUserByCredentials(email, password)
         .then(function (user) {
             if (!user) { //invalid user
+                // done supplies passport with the user, (or false if failed)
                 return done(null, false);
             } else {     //valid user
                 return done(null, user);
@@ -68,6 +69,7 @@ function login(req, res) {
     res.send(user);
 }
 
+
 function logout(req, res) {
     req.logOut();
     res.sendStatus(200);
@@ -82,40 +84,52 @@ function checkLogin(req, res) {
 
 //TODO
 function findUser(req, res) {
-    var body = req.body;
-    var email = body.email;
-    var password = body.password;
-    var username = body.username;
+    var username = req.query.username;
+    var email = req.query.email;
+    var password = req.query.password;
 
-    // username and password lookup
-    if (email && password) {
-        userModel
-            .findUserByCredentials(email, password)
-            .then(function (user) {
-                if (user != null) {
-                    res.send(user);
-                } else {
-                    res.sendStatus(404);    
-                }
-            }, function (err) {
-                console.log(err);
-                res.sendStatus(500);
-            });
-    // username only lookup 
-    } else if (username) {
+    if (username) {
         userModel
             .findUserByUsername(username)
             .then(function (user) {
-                if (user != null) {
-                    res.send(user);
-                } else {
-                    res.sendStatus(404);    
-                }
+                console.log('user: ', user);
+                res.send(user);
             }, function (err) {
                 console.log(err);
                 res.sendStatus(500);
             });
     }
+    
+
+    // username and password lookup
+    // if (email && password) {
+    //     userModel
+    //         .findUserByCredentials(email, password)
+    //         .then(function (user) {
+    //             if (user != null) {
+    //                 res.send(user);
+    //             } else {
+    //                 res.sendStatus(404);    
+    //             }
+    //         }, function (err) {
+    //             console.log(err);
+    //             res.sendStatus(500);
+    //         });
+    // // username only lookup 
+    // } else if (username) {
+    //     userModel
+    //         .findUserByUsername(username)
+    //         .then(function (user) {
+    //             if (user != null) {
+    //                 res.send(user);
+    //             } else {
+    //                 res.sendStatus(404);    
+    //             }
+    //         }, function (err) {
+    //             console.log(err);
+    //             res.sendStatus(500);
+    //         });
+    // }
 }
 
 

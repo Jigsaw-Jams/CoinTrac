@@ -8,9 +8,15 @@
         function linkFunction(scope, element) { }
 
         return {
-            templateUrl: "directives/navbar/navbar.view.html",
-            link: linkFunction
+            templateUrl: "directives/navbar/navbar.view.client.html",
+            link: linkFunction,
+            controller: "NavbarController",
+            controllerAs: "navbarModel",
+            scope: {
+                currentuser: "="
+            }
         }
+
     }
 })();
 

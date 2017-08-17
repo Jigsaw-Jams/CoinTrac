@@ -3,10 +3,14 @@
         .module("CoinTrac")
         .controller("ProfileController", ProfileController);
 
-        function ProfileController($routeParams, UserService) {
+        function ProfileController($routeParams, UserService, currentUser) {
             var model = this;
-            var twitterHandle = "wolfofpoloniex";
-            model.userId = $routeParams["userId"];
+            model.currentUser = currentUser
+            // model.loggedin = currentUser ? true : false;
+            // model.userId = currentUser._id;
+            
+            var twitterHandle = "wolfofpoloniex"; /// TODO REMOVE 
+            
 
             function init() {
                 UserService

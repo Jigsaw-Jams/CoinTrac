@@ -9,7 +9,10 @@
            .when("/", {
                 templateUrl : "views/home/templates/home.view.client.html",
                 controller: "HomeController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: { 
+                    currentUser: getCurrentUser
+                }
             })
             // -------- Search --------
             .when("/search", {
@@ -24,18 +27,40 @@
                 controllerAs: "model"
             })
             // ------ Profile ----------
-            .when("/profile/:userId", {
+            .when("/profile", {
                 templateUrl : "views/user/templates/profile.view.client.html",
                 controller: "ProfileController",
                 controllerAs: "model",
                 resolve: {
-                    qweqweqwe: checkLogin //todo
+                    currentUser: protectBehindLogin //todo
                 }
             });
 
 
+            // Return the currently logged in user, for changing context of things that can
+            // be viewed by registered and unregisterd users. If no user page will load with result null
+            function getCurrentUser(UserService, $q) {
+                var deferred = $q.defer();
+                
+                UserService
+                    .checkLogin()
+                    .then(function (user) {
+                        if(user === '0') {
+                            deferred.resolve(null);
+                        } else {
+                            deferred.resolve(user);
+                        }
+                    });
+                
+                return deferred.promise;
+            }
+
+
+            // Redirect the the home page if the user is not currently logged in
+            // if user is logged in allow them to access page and return user def
+
             // returns a promise so that resolve can run multiple async checks.
-            function checkLogin(UserService, $q, $location) {
+            function protectBehindLogin(UserService, $q, $location) {
                 var deferred = $q.defer();
 
                 UserService

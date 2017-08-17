@@ -3,12 +3,13 @@
         .module("CoinTrac")
         .controller("HomeController", HomeController);
 
-        function HomeController($location, $scope, HomeService, UserService) {
+        function HomeController($location, $rootScope, $scope, HomeService, UserService, currentUser) {
             var model = this;
-            model.createUser = createUser;
-            model.login = login;
+            model.currentUser = currentUser;
+            // model.loggedin = currentUser ? true : false;
 
             function init() {
+                $rootScope.yomama = 'asdf';
                 // Get the entire definition of the top 12 currencies
                 HomeService.getCoins(12)
                     .then(function (coins) {
@@ -35,52 +36,6 @@
 
             }
             init();
-
-
-            function createUser(user) {
-                // remove existing error classes
-                $('.form-group').removeClass('has-error');
-                UserService
-                    .findUserByUsername(user.username)
-                    .then(function () {
-                        model.errorMessage = "Sorry this username is already taken, try another.";
-                        $('#signup-username').addClass('has-error');
-                    }, function (err) {
-                        // only do other validation if the username is not taken
-                        if (!user.email) {
-                            $('#signup-email').addClass('has-error');
-                            model.errorMessage = "Sorry you must use a valid email address.";
-                        } else if (user.password != user.password2) {
-                            $('#signup-password').addClass('has-error');
-                            $('#signup-password2').addClass('has-error');
-                            model.errorMessage = "Sorry the passwords do not match.";
-                        } else { // at this point user can be created
-                            UserService
-                            .createUser(user)
-                            .then(function (response) {
-                                console.log('created user check DB');
-                                var user = response.data;
-                                $('.modal').modal('hide');
-                                $location.url("/profile/" + user._id);
-                            });
-                        }
-                    });
-            }
-
-            function login(user) {
-                UserService
-                    .login(user.email, user.password)
-                    .then(function (response) {
-                        var user = response.data;
-                        $('.modal').modal('hide');
-                        $location.url("/profile/" + user._id);
-                    }, function (err) {
-                        model.errorMessage = "Sorry the email and password combination were not found.";
-                    });
-            }
-
-
-
 
         }
 })();

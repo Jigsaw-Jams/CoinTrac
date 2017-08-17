@@ -10,10 +10,10 @@
       <div class="modal-body">
 
             <div class="form-group">
-                <div ng-show="model.errorMessage" class="alert alert-danger"> <strong>{{model.errorMessage}}</strong> </div>
+                <div ng-show="navbarModel.loginErrorMessage" class="alert alert-danger"> <strong>{{navbarModel.errorMessage}}</strong> </div>
                 <div class="input-group">
                     <span class="input-group-addon">@</span>
-                    <input ng-model="model.user.email"
+                    <input ng-model="navbarModel.user.email"
                            type="email"
                            class="form-control"
                            placeholder="someone@somewhere.com"
@@ -25,7 +25,7 @@
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                    <input ng-model="model.user.password"
+                    <input ng-model="navbarModel.user.password"
                            type="password"
                            class="form-control"
                            placeholder="Password"
@@ -38,7 +38,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button ng-click="model.login(model.user)" type="button" class="btn btn-primary">Login!</button>
+        <button ng-click="navbarModel.login(navbarModel.user)" type="button" class="btn btn-primary">Login!</button>
       </div>
     </div>
   </div>

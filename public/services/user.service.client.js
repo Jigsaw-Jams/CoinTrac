@@ -7,6 +7,7 @@
         var api = {
             "createUser"   : createUser,
             "login" : login,
+            "logout": logout,
             "findUserByUsername" : findUserByUsername,
             "findUserById" : findUserById,
             "checkLogin" : checkLogin
@@ -15,7 +16,6 @@
 
         function createUser(user) {
             var url = "/api/v1/user";
-            console.log(url);
             return $http.post(url, user);
         }
 
@@ -24,22 +24,26 @@
             return $http.post(url, {email: email, password: password});
         }
 
-        // function findUserByCredentials(email, password) {
-        //     var url = "/api/v1/user?email=" + email + "&password=" + password;
-        //     return $http.get(url);
-        // }
+        function logout() {
+            var url = "/api/v1/logout";
+            return $http.post(url);
+        }
 
         function findUserByUsername(username) {
             var url =  "/api/v1/user?username=" + username;
-            return $http.get(url);
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
         }
 
+        //TODO UNRWAP RESPONSEES
         function findUserById(userId) {
             var url = `/api/v1/user/${userId}`;
             return $http.get(url);
         }
 
-        //TODO UNRWAP RESPONSEES
+        
         function checkLogin() {
             var url = `/api/v1/checkLogin`;
             return $http.get(url)

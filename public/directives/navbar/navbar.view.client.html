@@ -1,0 +1,55 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <span><img alt="Brand" src="./static/btc.ico"></span>
+                CoinTrac
+            </a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul ng-hide="navbarModel.currentUser" class="nav navbar-nav navbar-right">
+                <li>
+                    <a type="button" data-toggle="modal" data-target="#login-modal">Log in</a>
+                </li>
+                <li>
+                    <a class="navbar-no-hover hidden-xs" type="button"> / </a>
+                </li>
+                <li>
+                    <a type="button" data-toggle="modal" data-target="#signup-modal">Sign up</a>
+                </li>    
+            </ul>
+
+            <ul ng-show="navbarModel.currentUser" class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">{{navbarModel.currentUser.username}} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">
+                            Signed in as
+                            <strong>{{navbarModel.currentUser.username}}</strong>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li><a>Profile</a></li>
+                        <li><a>Settings</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a ng-click="navbarModel.logout()">Sign Out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div> <!-- /collapse -->
+
+    </div><!-- / container -->
+</nav>
+
+<div ng-include src="'./directives/navbar/login-modal.view.client.html'"></div>
+<div ng-include src="'./directives/navbar/signup-modal.view.client.html'"></div>
+<!-- <div ng-include src="'./views/home/templates/signup-modal.view.client.html'"></div> -->
