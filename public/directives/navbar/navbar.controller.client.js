@@ -3,14 +3,15 @@
         .module("coinTracDirectives")
         .controller("NavbarController", NavbarController);
 
-        function NavbarController(UserService, $location, $scope, $route) {
+        function NavbarController(UserService, $location, $rootScope, $scope, $route) {
             var navbarModel = this;
             // functions
             navbarModel.login = login;
             navbarModel.logout = logout;
             navbarModel.createUser = createUser;
             function init() {
-                navbarModel.currentUser = $scope.currentuser;
+                console.log($rootScope.currentUser)
+                navbarModel.currentUser = $rootScope.currentUser;
             }
             init();
 
@@ -50,6 +51,7 @@
                     .login(user.email, user.password)
                     .then(function (response) {
                         $('.modal').modal('hide');
+                        $rootScope.currentUser = response.data;
                         $route.reload();
                     }, function (err) {
                         navbarModel.loginErrorMessage = "Sorry the email and password combination were not found.";
@@ -60,6 +62,7 @@
                 UserService
                     .logout()
                     .then(function () {
+                        $rootScope.currentUser = null;
                         $route.reload();
                     });
             }

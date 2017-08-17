@@ -11,10 +11,7 @@
             templateUrl: "directives/portfolio/portfolio.view.html",
             // link: linkFunction
             controller: "PortfolioController",
-            controllerAs: "portfolioModel",
-            scope: {
-                currentuser: "="
-            }
+            controllerAs: "portfolioModel"
         }
     }
 })();

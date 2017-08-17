@@ -11,10 +11,7 @@
             templateUrl: "directives/navbar/navbar.view.client.html",
             // link: linkFunction,
             controller: "NavbarController",
-            controllerAs: "navbarModel",
-            scope: {
-                currentuser: "="
-            }
+            controllerAs: "navbarModel"
         }
 
     }

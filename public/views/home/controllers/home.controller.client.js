@@ -3,9 +3,9 @@
         .module("CoinTrac")
         .controller("HomeController", HomeController);
 
-        function HomeController($location, $rootScope, $scope, HomeService, UserService, currentUser) {
+        function HomeController($location, $rootScope, $scope, HomeService, UserService) {
             var model = this;
-            model.currentUser = currentUser;
+            model.currentUser = $rootScope.currentUser;
             // model.loggedin = currentUser ? true : false;
 
             function init() {

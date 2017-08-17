@@ -3,7 +3,7 @@
         .module("coinTracDirectives")
         .controller("PortfolioController", PortfolioController);
 
-        function PortfolioController($scope, HoldingService, HomeService, DetailsService) {
+        function PortfolioController($rootScope, $scope, HoldingService, HomeService, DetailsService) {
             var portfolioModel = this;
             
             portfolioModel.createHolding = createHolding;
@@ -13,7 +13,7 @@
 
 
             function init() {
-                portfolioModel.currentUser = $scope.currentuser;
+                portfolioModel.currentUser = $rootScope.currentUser;
 
                 // Not sure how to get around DOM manipulation via jQuery here
                 // This resets the modal when it is clicked out of.
