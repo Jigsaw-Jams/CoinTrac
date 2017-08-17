@@ -7,6 +7,9 @@
             var portfolioModel = this;
             
             portfolioModel.createHolding = createHolding;
+            portfolioModel.setCurrentHolding = setCurrentHolding;
+            portfolioModel.updateHolding = updateHolding;
+            portfolioModel.deleteHolding = deleteHolding;
 
 
             function init() {
@@ -23,13 +26,7 @@
                     });
                 });
 
-                /** Find the current user's holdings then calc portfolio value **/
-                findHoldingsForUser()
-                    .then(function (d) {
-                        calculatePortfolioValue();
-                    })
-                    
-
+                getPortfolio();                    
 
                 /* Get all available coins for the search/autocomplete functionality */
                 HomeService
@@ -69,13 +66,39 @@
                         // empty inputs & update the portfolio to show this new holding
                         portfolioModel.newHolding = null;
                         portfolioModel.imgsrc = null;
-                        findHoldingsForUser();
-                        calculatePortfolioValue();
+                        getPortfolio();
                     }, function (err) {
                         console.log(err);
                     });
 
             }
+
+            function setCurrentHolding(holding) {
+                portfolioModel.currentHolding = holding;
+            }
+
+            function updateHolding(holdingId, holding) {
+                HoldingService
+                    .updateHolding(holdingId, holding)    
+                    .then(function (holding) {
+                        getPortfolio();
+                        console.log(holding);
+                    }, function (err) {
+                        console.log(err);
+                    });
+            }
+
+            function deleteHolding(holdingId) {
+                HoldingService
+                    .deleteHolding(holdingId)
+                    .then(function (response) {
+                        getPortfolio();
+                        console.log('deleted');
+                    }, function (err) {
+                        console.log(err);
+                    });
+            }
+
 
 
 
@@ -83,45 +106,32 @@
 
             /** UTILITY FUNCTIONS (not exposed on the view model) */
             function findHoldingsForUser() {
-                // Only display holdings if there is a user currently logged in
-                if (portfolioModel.currentUser != null) {
-                    return HoldingService
-                        .findHoldingsForUser(portfolioModel.currentUser._id)
-                        .then(function (holdings) {
-                            // return holdings.data;
-                            if (holdings.data.length) {
-                                portfolioModel.holdings = holdings.data;
-                            }
-                        });
-                } else { //TODO BAD
-                    console.log('no user');
-                    return;
-                }
-            }
-
-
-            function calculatePortfolioValue() {
-                console.log('ready');
-                var total = 0;
-                var promises = [];
-
-                for (h in portfolioModel.holdings) {
-                    console.log('set');
-                    promises.push(DetailsService
-                        .getCoinDetails(portfolioModel.holdings[h].coinId)
-                        .then(function (data) {
-                            var amount = portfolioModel.holdings[h].amount;
-                            var price = data.price_usd;
-                            total = total + (amount * price);
-                        })
-                    );
-                }
-            
-                return Promise.all(promises)
-                    .then(function(data) {
-                        portfolioModel.portfolioValue = total;
+                return HoldingService
+                    .findHoldingsForUser(portfolioModel.currentUser._id)
+                    .then(function (holdings) {
+                        if (holdings.data.length) {
+                            portfolioModel.holdings = holdings.data;
+                            return holdings.data;
+                        }
                     });
-
+            }
+            function calculateValueOfHoldings(holdings) {
+                return DetailsService
+                    .calculateValueOfHoldings(holdings)
+                    .then(function (value) {
+                        portfolioModel.value = value;
+                        console.log(value);
+                        return value;
+                    });
+            }
+            /** Find the current user's holdings then calc portfolio value **/
+            function getPortfolio() {
+                if (portfolioModel.currentUser) {
+                    findHoldingsForUser()
+                        .then(function (holdings) {
+                            calculateValueOfHoldings(holdings);
+                        });
+                }
             }
 
         }

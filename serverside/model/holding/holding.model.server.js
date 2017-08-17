@@ -8,6 +8,7 @@ var userModel = require("../user/user.model.server");
 // Create and export functions that cna be called on this model
 holdingModel.createHolding = createHolding;
 holdingModel.findHoldingsForUser = findHoldingsForUser;
+holdingModel.updateHolding = updateHolding;
 holdingModel.deleteHolding = deleteHolding;
 module.exports = holdingModel;
 
@@ -21,14 +22,15 @@ function createHolding(userId, holding) {
         });
 }
 
-
-
-
+function updateHolding(holdingId, holding) {
+    return holdingModel.update({_id: holdingId}, {$set: holding});
+}
 
 function findHoldingsForUser(userId) {
     return holdingModel.find({_user: userId});
 }
 
+//TODO UPDATE TO CASCADE DELETE
 function deleteHolding(holdingId) {
-    return holdingModel.remove(holdingId);
+    return holdingModel.remove({_id: holdingId});
 }

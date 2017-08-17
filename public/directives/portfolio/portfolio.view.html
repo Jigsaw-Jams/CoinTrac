@@ -7,8 +7,8 @@
 
 <div class="panel panel-default with-nav-tabs">
  
-    <div class="panel-heading">
-        <h4><strong>Value: </strong> {{ portfolioModel.portfolioValue | currency : "$USD" : 3}}</h4>
+    <div ng-show="portfolioModel.value" class="panel-heading">
+        <h4>{{ portfolioModel.value.usd | currency : "$ " : 3}} <strong>/</strong> {{ portfolioModel.value.btc | currency : "BTC: " : 5}}</h4>
     </div>
 
     <div class="panel-body">
@@ -17,8 +17,8 @@
             <thead>
                 <tr>
                     <th>COIN</th>
-                    <th>PRICE</th>
                     <th>AMOUNT</th>
+                    <th>PRICE/COIN</th>
                     <th>edit</th>
                 </tr>
             </thead>
@@ -28,9 +28,14 @@
                         <img ng-src="https://files.coinmarketcap.com/static/img/coins/16x16/{{holding.coinId}}.png" alt="i" />
                         {{holding.coinId}}
                     </td>
-                    <td>${{holding.fiatPerCoin}}</td>
                     <td>{{holding.amount}}</td>
-                    <td><button class="btn btn-xs btn-warning">Edit</button></td>
+                    <td>${{holding.fiatPerCoin}}</td>
+                    <td>
+                        <button ng-click="portfolioModel.setCurrentHolding(holding)"
+                                data-toggle="modal"
+                                data-target="#edit-holding-modal"
+                                class="btn btn-xs btn-warning">Edit</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -88,6 +93,9 @@
             </div><!-- /modal-content -->
         </div>
     </div>
+
+    <!-- edit holding modal -->
+    <div ng-include src="'./directives/portfolio/edit-holding-modal.view.client.html'"></div>
     <!--  /////////////////////////////////////////////////////////  -->
 
 
