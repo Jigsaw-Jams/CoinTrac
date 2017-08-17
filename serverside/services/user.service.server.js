@@ -92,7 +92,6 @@ function findUser(req, res) {
         userModel
             .findUserByUsername(username)
             .then(function (user) {
-                console.log('user: ', user);
                 res.send(user);
             }, function (err) {
                 console.log(err);

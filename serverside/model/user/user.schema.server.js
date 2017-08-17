@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var userSchema = mongoose.Schema(
     {
         email            : { type: String, unique: true, required: true },
+        isAdmin          : Boolean,
         username         : String,
         password         : String,
         preferredCurrency: String,
