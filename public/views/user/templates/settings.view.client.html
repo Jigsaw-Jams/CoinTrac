@@ -1,0 +1,47 @@
+<navbar currentuser="model.currentUser"></navbar>
+
+
+<div class="container">
+    <div ng-show="model.errorMessage" class="alert alert-danger"> <strong>{{model.errorMessage}}</strong> </div>
+    <div ng-show="model.successMessage" class="alert alert-success"> <strong>{{model.successMessage}}</strong> </div>
+
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input ng-model="model.currentUser.username"
+                type="text"
+                class="form-control"
+                id="username"
+                name="username">
+    </div>
+
+    <div class="form-group">
+        <label for="preferredCurrency">Currency Type (used as default currency throughout)</label>
+        <input ng-model="model.currentUser.preferredCurrency"
+                type="text"
+                class="form-control"
+                id="preferredCurrency"
+                name="preferredCurrency">
+    </div>
+
+    <div class="form-group">
+        <label for="twitterHandle">Twitter Handle (Adds your twitter timeline to your profile)</label>
+        <input ng-model="model.currentUser.twitterHandle"
+                type="text"
+                class="form-control"
+                id="twitterHandle"
+                name="twitterHandle">
+    </div>
+
+
+    <button class="btn btn-outline btn-primary btn-block">Update!</button>
+
+    <br>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            Thanks for being a member <span class="glyphicon glyphicon-heart"></span>
+            <br>
+            Member since: {{model.currentUser.created | date : format : short}}
+        </div>
+    </div>
+</div>

@@ -33,6 +33,7 @@
                                 $('#signup-password2').addClass('has-error');
                                 navbarModel.signupErrorMessage = "Sorry the passwords do not match.";
                             } else {
+                                user.preferredCurrency = 'USD';
                                 UserService
                                     .createUser(user)
                                     .then(function (response) {

@@ -34,6 +34,15 @@
                 resolve: {
                     currentUser: protectBehindLogin
                 }
+            })
+            // ------- Settings --------
+            .when("/settings", {
+                templateUrl : "views/user/templates/settings.view.client.html",
+                controller: "SettingsController",
+                controllerAs: "model",
+                resolve: {
+                    currentUser: protectBehindLogin
+                }
             });
 
 
