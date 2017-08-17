@@ -3,7 +3,7 @@
         .module("CoinTrac")
         .controller("SettingsController", SettingsController);
 
-        function SettingsController($routeParams, $location, UserService, currentUser) {
+        function SettingsController($routeParams, $route, $location, UserService, currentUser) {
             var model = this;
             model.updateUser = updateUser;
             model.deleteUser = deleteUser;
@@ -17,7 +17,7 @@
                 UserService
                     .updateUser(user._id, user)
                     .then( function (user) {
-                        model.currentUser = user;
+                        $route.reload();
                     });
             }
 

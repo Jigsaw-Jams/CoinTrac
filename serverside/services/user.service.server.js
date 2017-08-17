@@ -123,7 +123,8 @@ function updateUser(req, res) {
     userModel
         .updateUser(userId, user)
         .then(function (user) {
-            res.send(user);
+            console.log(user);
+            res.sendStatus(200);
         }, function(err) {
             console.log(err);
             res.sendStatus(500);
