@@ -5,17 +5,12 @@
 
         function NavbarController(UserService, $location, $scope, $route) {
             var navbarModel = this;
-            console.log($scope);
-            console.log($scope.currentuser);
-
-            navbarModel.currentUser = $scope.currentuser;
-
             // functions
             navbarModel.login = login;
             navbarModel.logout = logout;
             navbarModel.createUser = createUser;
             function init() {
-
+                navbarModel.currentUser = $scope.currentuser;
             }
             init();
 

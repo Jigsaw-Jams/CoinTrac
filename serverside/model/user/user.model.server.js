@@ -8,6 +8,7 @@ userModel.createUser = createUser;
 userModel.findUserByCredentials = findUserByCredentials;
 userModel.findUserByUsername = findUserByUsername;
 userModel.findUserById = findUserById;
+userModel.addHolding = addHolding;
 module.exports = userModel;
 
 
@@ -49,4 +50,21 @@ function findUserByUsername(username) {
  */
 function findUserById(userId) {
     return userModel.findById(userId);
+}
+
+
+/**
+ * Add a holding belonging to this user. Used by the holding model.
+ * 
+ * @param {*} userId 
+ * @param {*} holdingId 
+ */
+function addHolding(userId, holdingId) {
+    console.log(userId);
+    return userModel
+        .findUserById(userId)
+        .then(function (user) {
+            user.portfolio.push(holdingId);
+            return user.save();
+        });
 }

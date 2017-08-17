@@ -5,14 +5,16 @@
 
 
     function portfolioDirective() {
-
         function linkFunction(scope, element) { }
 
         return {
             templateUrl: "directives/portfolio/portfolio.view.html",
             // link: linkFunction
             controller: "PortfolioController",
-            controllerAs: "portfolioModel"
+            controllerAs: "portfolioModel",
+            scope: {
+                currentuser: "="
+            }
         }
     }
 })();

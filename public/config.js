@@ -32,7 +32,7 @@
                 controller: "ProfileController",
                 controllerAs: "model",
                 resolve: {
-                    currentUser: protectBehindLogin //todo
+                    currentUser: protectBehindLogin
                 }
             });
 

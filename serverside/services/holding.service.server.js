@@ -8,10 +8,13 @@ app.get   ("/api/v1/user/:userId/holding", findHoldingsForUser);
 app.delete("/api/v1/user/:userId/holding/:holdingId", deleteHolding);
 
 function createHolding(req, res) {
+    var userId = req.params.userId;
+
     var newHolding = req.body;
 
+
     holdingModel
-        .createHolding(newHolding)
+        .createHolding(userId, newHolding)
         .then(function (holding) {
             res.send(holding);
         }, function (err) {
@@ -19,6 +22,7 @@ function createHolding(req, res) {
             res.sendStatus(500);
         });
 }
+
 
 function findHoldingsForUser(req, res) {
     var userId = req.params.userId;
@@ -32,6 +36,7 @@ function findHoldingsForUser(req, res) {
             res.sendStatus(404);
         });
 }
+
 
 function deleteHolding(req, res) {
 

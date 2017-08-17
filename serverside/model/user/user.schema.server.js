@@ -7,6 +7,7 @@ var userSchema = mongoose.Schema(
         password         : String,
         preferredCurrency: String,
         portfolio        : [{ type: mongoose.Schema.Types.ObjectId, ref: "HoldingModel"}],
+        twitterHandle    : String,
         //watchlists       : [{ type: mongoose.Schema.Types.ObjectId, ref: "WatchlistModel"}],
         created          : {type: Date, default: Date.now}
     },

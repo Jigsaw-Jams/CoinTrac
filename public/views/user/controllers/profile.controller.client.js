@@ -5,29 +5,41 @@
 
         function ProfileController($routeParams, UserService, currentUser) {
             var model = this;
-            model.currentUser = currentUser
-            // model.loggedin = currentUser ? true : false;
-            // model.userId = currentUser._id;
+            model.currentUser = currentUser;
             
-            var twitterHandle = "wolfofpoloniex"; /// TODO REMOVE 
-            
-
             function init() {
-                UserService
-                    .findUserById(model.userId)
-                    .then(function (user) {
-                        model.user = user.data;
+                if (currentUser.twitterHandle) {
+                    twttr.ready(function () {
+                        twttr.widgets.createTimeline(
+                            {
+                                sourceType: 'profile',
+                                screenName: model.user.twitterHandle
+                            },
+                            document.getElementById('twitter-timeline'),
+                            {});
                     });
+                }
 
-                twttr.ready(function () {
-                    twttr.widgets.createTimeline(
-                        {
-                            sourceType: 'profile',
-                            screenName: twitterHandle
-                        },
-                        document.getElementById('twitter-timeline'),
-                        {});
-                });
+
+                // UserService
+                //     .findUserById(model.currentUser._id)
+                //     .then(function (user) {
+                //         model.user = user.data;
+
+                //         if (user.twitterHandle) {
+                //             twttr.ready(function () {
+                //                 twttr.widgets.createTimeline(
+                //                     {
+                //                         sourceType: 'profile',
+                //                         screenName: model.user.twitterHandle
+                //                     },
+                //                     document.getElementById('twitter-timeline'),
+                //                     {});
+                //             });
+                //         }
+
+
+                //     });
             }
             init();
             

@@ -22,23 +22,6 @@ function createHolding(userId, holding) {
 }
 
 
-// Creates a new website instance for user whose _id is userId
-function createWebsiteForUser(userId, website) {
-    // set the back reference to the user who created the website
-    website._user = userId;
-    var returnWebsite = null;
-
-    return websiteModel
-        .create(website)
-        .then(function (websiteDoc) {
-            returnWebsite = websiteDoc;
-            return userModel.addWebsite(userId, websiteDoc._id);
-        })
-        .then(function (userDoc) {
-           return returnWebsite;
-        });
-}
-
 
 
 

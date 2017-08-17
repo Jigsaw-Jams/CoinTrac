@@ -3,13 +3,15 @@
         .module("coinTracDirectives")
         .controller("PortfolioController", PortfolioController);
 
-        function PortfolioController($routeParams, $scope, HoldingService, HomeService) {
+        function PortfolioController($scope, HoldingService, HomeService) {
             var portfolioModel = this;
-            portfolioModel.userId = $routeParams['userId'];
+            
             portfolioModel.createHolding = createHolding;
 
 
             function init() {
+                portfolioModel.currentUser = $scope.currentuser;
+
                 // Not sure how to get around DOM manipulation via jQuery here
                 // This resets the modal when it is clicked out of.
                 // I am currently just disabling the input field for validation
@@ -20,11 +22,9 @@
                         $scope.$apply();
                     });
                 });
-                ////////////////////////////////////////////////////////////////
 
                 /** Find the current user's holdings  **/
                 findHoldingsForUser();
-
 
                 /* Get all available coins for the search/autocomplete functionality */
                 HomeService
@@ -48,20 +48,19 @@
                             }
                         });
                     });
-
             }
             init();
 
 
             // Create a holding for the current user's portfolio
-            function createHolding() {
-                portfolioModel.newHolding.fiatCurrency = 'USD';
-                bad_id = "598e4e0217819930d2fbbfd9";
-                portfolioModel.newHolding._user = bad_id;
+            function createHolding(holding) {
+                holding.fiatCurrency = 'USD';
+                var userId = portfolioModel.currentUser._id;
+                holding._user = userId;
 
                 HoldingService
-                    .createHolding(bad_id, portfolioModel.newHolding)
-                    .then(function (response) {
+                    .createHolding(userId, holding)
+                    .then(function (holding) {
                         // empty inputs & update the portfolio to show this new holding
                         portfolioModel.newHolding = null;
                         portfolioModel.imgsrc = null;
@@ -79,21 +78,16 @@
             /** UTILITY FUNCTIONS (not exposed on the view model) */
             function findHoldingsForUser() {
                 // Only display holdings if there is a user currently logged in
-                if (portfolioModel.userId != null) {
+                if (portfolioModel.currentUser != null) {
                     HoldingService
-                        .findHoldingsForUser(portfolioModel.userId)
+                        .findHoldingsForUser(portfolioModel.currentUser._id)
                         .then(function (holdings) {
                             portfolioModel.holdings = holdings.data;
+                            console.log(portfolioModel);
                             console.log('holdings loaded for user');
                         });
                 } else { //TODO BAD
-                    HoldingService
-                        .findHoldingsForUser("598e4e0217819930d2fbbfd9")
-                        .then(function (holdings) {
-                            portfolioModel.holdings = holdings.data;
-                            console.log('holdings loaded for user');
-                            console.log(portfolioModel.holdings);
-                        });                    
+                    console.log('no user')
                 }
             }
 

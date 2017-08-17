@@ -9,7 +9,7 @@
 
         return {
             templateUrl: "directives/navbar/navbar.view.client.html",
-            link: linkFunction,
+            // link: linkFunction,
             controller: "NavbarController",
             controllerAs: "navbarModel",
             scope: {
