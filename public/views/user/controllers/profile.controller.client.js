@@ -13,7 +13,7 @@
                         twttr.widgets.createTimeline(
                             {
                                 sourceType: 'profile',
-                                screenName: model.user.twitterHandle
+                                screenName: currentUser.twitterHandle
                             },
                             document.getElementById('twitter-timeline'),
                             {});
