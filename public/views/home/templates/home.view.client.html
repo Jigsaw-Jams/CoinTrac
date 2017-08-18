@@ -11,27 +11,52 @@
     </div>
     <hr>
 
+    <div ng-show="!model.currentUser">
+        <p>Welcome to CoinTrac, an easy to use Cryptocurrency portfolio management system.</p>
+        <p>You can search and view top coin stats witout an account</p>
+        <p>Sign up to begin your portfolio!</p>
+    </div>
+
     <portfolio ng-show="model.currentUser"></portfolio>
 
-    <hr>
 
-    <h2 class="text-center">Top Twelve Currencies in USD</h2>
-    
-    <div class="row">
-        <div ng-repeat="coin in model.topTwelve" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-            <div class="panel" ng-class="{ 'panel-danger': coin.percent_change_24h < 0, 'panel-success': coin.percent_change_24h >= 0}">
-                <div class="panel-heading">
-                    {{coin.id | uppercase}}
-                    <div class="pull-right">[{{coin.symbol | uppercase}}]</div>
+
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="" data-target="#topTwelve" aria-controls="topTwelve" role="tab" data-toggle="tab">Top Twelve</a></li>
+            <li ng-show="model.currentUser" role="presentation"> <a href="" data-target="#lists" aria-controls="lists" role="tab" data-toggle="tab">Watch Lists</a></li>
+        </ul>
+    </div>
+    <div class="panel-body">
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="topTwelve">
+                <h2 class="text-center">Top Twelve Currencies in USD</h2>
+                
+                <div class="row">
+                    <div ng-repeat="coin in model.topTwelve" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                        <div class="panel" ng-class="{ 'panel-danger': coin.percent_change_24h < 0, 'panel-success': coin.percent_change_24h >= 0}">
+                            <div class="panel-heading">
+                                {{coin.id | uppercase}}
+                                <div class="pull-right">[{{coin.symbol | uppercase}}]</div>
+                            </div>
+                            <div class="panel-body">
+                                <h2>${{coin.price_usd}}</h2>
+                                <strong ng-class="{ 'text-danger': coin.percent_change_24h < 0, 'text-success': coin.percent_change_24h >= 0}">[{{coin.percent_change_24h}}%]</strong>
+                                
+                            </div>
+                        </div>  
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <h2>${{coin.price_usd}}</h2>
-                    <strong ng-class="{ 'text-danger': coin.percent_change_24h < 0, 'text-success': coin.percent_change_24h >= 0}">[{{coin.percent_change_24h}}%]</strong>
-                    
-                </div>
-            </div>  
+            </div>
+            <div ng-show="model.currentUser" role="tabpanel" class="tab-pane" id="lists">lists</div>
         </div>
     </div>
+
+
+    
 
     <hr>
 

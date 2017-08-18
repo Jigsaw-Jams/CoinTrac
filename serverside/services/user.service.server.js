@@ -20,8 +20,9 @@ app.get   ("/api/v1/users", findAllUsers);
 app.get   ("/api/v1/user/:userId", findUserById);
 app.put   ("/api/v1/user/:userId", updateUser);
 app.delete("/api/v1/user/:userId", deleteUser);
+app.put   ("/api/v1/user/:userId/watchlist/:coinId", addCoinToWatchlist);
+app.delete("/api/v1/user/:userId/watchlist/:coinId", removeCoinFromWatchlist);
 app.get   ("/auth/google", passport.authenticate('google', {scope : ['profile', 'email']}));
-// app.get   ("/google/callback", passport.authenticate('google'), login);
 app.get   ("/google/callback", 
     passport.authenticate('google', {
         successRedirect: "/#!/",
@@ -69,15 +70,13 @@ function googleStrategy(token, refreshToken, profile, done) {
 
 function localStrategy(email, password, done) {
     // passport will ignore all attributes besides exactly, email & password
-    
     userModel
         .findUserByEmail(email)
         .then(function (user) {
-            if (!user) { //invalid user
-                // done supplies passport with the user, (or false if failed)
-                return done(null, false);
-            } else if (user && bcrypt.compareSync(password, user.password)) {
+            if (user && bcrypt.compareSync(password, user.password)) {
                 return done(null, user);
+            } else {
+                return done(null, false);
             }
         }, function (err) {
             if (err) { return done(err); }
@@ -218,4 +217,34 @@ function deleteUser(req, res) {
             console.log(err);
             res.sendStatus(500);
         });
+}
+
+
+function addCoinToWatchlist(req, res) {
+    console.log('add it');
+    var userId = req.params.userId;
+    var coinId = req.params.coinId;
+
+
+    userModel
+        .addCoinToWatchlist(userId, coinId)
+        .then(function (user) {
+            res.send(user);
+        }, function (err) {
+            res.sendStatus(500);
+        })
+}
+
+
+function removeCoinFromWatchlist(req, res) {
+    var userId = req.params.userId;
+    var coinid = req.params.coinId;
+
+    userModel
+        .removeCoinFromWatchlist(userId, coinId)
+        .then(function (user) {
+            res.send(user);
+        }, function (err) {
+            res.sendStatus(500);
+        })
 }

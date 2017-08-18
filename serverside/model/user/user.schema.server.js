@@ -13,7 +13,9 @@ var userSchema = mongoose.Schema(
             id: String,
             token: String
         },
-        //watchlists       : [{ type: mongoose.Schema.Types.ObjectId, ref: "WatchlistModel"}],
+        following        : [{ type: mongoose.Schema.Types.ObjectId, ref: "UserModel"}],
+        followers        : [{ type: mongoose.Schema.Types.ObjectId, ref: "UserModel"}],
+        watchlist        : [{ type: String}],
         created          : {type: Date, default: Date.now}
     },
     { collection: 'user'} // Explicitly declare collection name to avoid pluralizing

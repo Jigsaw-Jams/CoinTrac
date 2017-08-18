@@ -29,11 +29,19 @@
                         });
                     });
 
+                // if (model.currentUser) {
+                //     UserService
+                //        .getFollowingLists(model.currentUser._id)
+                //         .then(function (followingLists) {
+                //             model.followingLists = followingLists;
+                //         });
+                // }
+                    
                 $('#myTabs a').click(function (e) {
                     e.preventDefault()
                     $(this).tab('show');
                 });
-
+                    
             }
             init();
 

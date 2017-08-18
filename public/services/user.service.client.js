@@ -14,7 +14,10 @@
             "findUserById" : findUserById,
             "checkLogin" : checkLogin,
             "updateUser" : updateUser,
-            "deleteUser" : deleteUser
+            "deleteUser" : deleteUser,
+            "addCoinToWatchlist": addCoinToWatchlist,
+            "removeCoinFromWatchlist" : removeCoinFromWatchlist,
+            "getFollowingLists": getFollowingLists
         };
         return api;
 
@@ -24,6 +27,7 @@
         }
 
         function login(email, password) {
+            console.log('logging ing');
             var url = "/api/v1/login";
             return $http.post(url, {email: email, password: password});
         }
@@ -84,5 +88,43 @@
             var url = `/api/v1/user/${userId}`;
             return $http.delete(url);
         }
+
+        function addCoinToWatchlist(userId, coinId) {
+            var url = `/api/v1/user/${userId}/watchlist/${coinId}`;
+            return $http.put(url);
+        }
+
+        function removeCoinFromWatchlist(userId, coinId) {
+            var url = `/api/v1/user/${userId}/watchlist/${coinId}`;
+            return $http.delete(url);
+        }
+
+        function getFollowingLists(userId) {
+            var promises = [];
+            var followingLists = [];
+
+            findUserById(userId)
+                .then(function (user) {
+                    for (u in user.following) {
+                        var following = user.following[u];
+                        
+                        (function (currentFollowing) {
+                            promises.push(findUserById(currentFollowing)
+                                .then(function (currUser) {
+                                    followingLists.push(currUser.watchlist);
+                                }))
+                        })(following);
+
+                    }
+
+                    return Promise.all(promises)
+                        .then(function (data) {
+                            return folllowingLists;
+                        });
+
+                })
+            
+        }
+
     }
 })();

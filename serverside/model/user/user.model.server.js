@@ -12,8 +12,12 @@ userModel.findUserByEmail = findUserByEmail;
 userModel.findUserByGoogleId = findUserByGoogleId;
 userModel.findUserById = findUserById;
 userModel.addHolding = addHolding;
+userModel.removeHolding = removeHolding;
 userModel.updateUser = updateUser;
 userModel.deleteUser = deleteUser;
+userModel.addCoinToWatchlist = addCoinToWatchlist;
+userModel.removeCoinFromWatchlist = removeCoinFromWatchlist;
+userModel.addFollowing = addFollowing;
 module.exports = userModel;
 
 
@@ -97,6 +101,24 @@ function addHolding(userId, holdingId) {
         });
 }
 
+
+/**
+ * Remove a holding belonging to this user. Used by the holding model.
+ * 
+ * @param {*} userId 
+ * @param {*} holdingId 
+ */
+function removeHolding(userId, holdingId) {
+    console.log(userId);
+    return userModel
+        .findUserById(userId)
+        .then(function (user) {
+            var index = user.portfolio.indexOf(holdingId);
+            user.portfolio.splice(index, 1);
+            return user.save();
+        });
+}
+
 /**
  * Update the user with the given userId
  * 
@@ -113,4 +135,53 @@ function updateUser(userId, user) {
  */
 function  deleteUser(userId) {
     return userModel.remove({_id: userId});
+}
+
+
+
+
+function addCoinToWatchlist(userId, coinId) {
+    return userModel
+        .findUserById(userId)
+        .then(function (user) {
+            var index = user.watchlist.indexOf(coinId);
+
+            if(index === -1) {
+                user.watchlist.push(coinId)
+                return user.save();
+            } else {
+                return user;
+            }
+
+        }, function (err) {
+            console.log(err);
+        });
+}
+
+function removeCoinFromWatchlist(userId, coinId) {
+    return userModel
+        .findUserById(userid)
+        .then(function (user) {
+            var index = user.watchlist.indexOf(holdingId);
+            user.watchlist.splice(index, 1);
+            return user.save();
+        })
+}
+
+
+function addFollowing(userId, followingId) {
+    return userModel
+    .findUserById(userId)
+        .then(function (user) {
+            var index = user.following.indexOf(followingId);
+
+            if(index === -1) {
+                user.following.push(followingId)
+                return user.save();
+            } else {
+                return user;
+            }
+        }, function (err) {
+            console.log(err);
+        });
 }
