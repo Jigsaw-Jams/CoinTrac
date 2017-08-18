@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Jigsaw-Jams/webdev_project.git"
+    "url": "git+https://github.com/Jigsaw-Jams/webdev-project.git"
   },
   "author": "DJ Strasser",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Jigsaw-Jams/webdev_project/issues"
+    "url": "https://github.com/Jigsaw-Jams/webdev-project/issues"
   },
-  "homepage": "https://github.com/Jigsaw-Jams/webdev_project#readme",
+  "homepage": "https://github.com/Jigsaw-Jams/webdev-project#readme",
   "dependencies": {
     "angular": "^1.6.5",
     "angular-route": "^1.6.5",
