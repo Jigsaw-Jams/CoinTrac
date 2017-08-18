@@ -20,7 +20,6 @@
                 // I am currently just disabling the input field for validation
                 $(document).ready(function () {
                     $('.modal').on('hidden.bs.modal', function(e) { 
-                        // portfolioModel.holding = null;
                         portfolioModel.imgsrc = null;
                         $scope.$apply();
                     });
@@ -82,7 +81,6 @@
                     .updateHolding(holdingId, holding)    
                     .then(function (holding) {
                         getPortfolio();
-                        console.log(holding);
                     }, function (err) {
                         console.log(err);
                     });
@@ -93,7 +91,6 @@
                     .deleteHolding(holdingId)
                     .then(function (response) {
                         getPortfolio();
-                        console.log('deleted');
                     }, function (err) {
                         console.log(err);
                     });

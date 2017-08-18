@@ -5,11 +5,11 @@
 
         function ProfileController($routeParams, $rootScope, $route, UserService, CoinmarketcapService, currentUser) {
             var model = this;
-            model.currentUser = currentUser;
-            console.log(currentUser);
             
             function init() {
+                model.currentUser = currentUser;
                 $rootScope.currentUser = model.currentUser;
+                
                 if (currentUser.twitterHandle) {
                     twttr.ready(function () {
                         twttr.widgets.createTimeline(
