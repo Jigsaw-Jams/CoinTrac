@@ -9,6 +9,8 @@
             "login" : login,
             "logout": logout,
             "findUserByUsername" : findUserByUsername,
+            "findUserByEmail" : findUserByEmail,
+            "findAllUsers" : findAllUsers,
             "findUserById" : findUserById,
             "checkLogin" : checkLogin,
             "updateUser" : updateUser,
@@ -39,7 +41,23 @@
                 });
         }
 
-        //TODO UNRWAP RESPONSEES
+        function findUserByEmail(email) {
+            var url =  "/api/v1/user?email=" + email;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+
+        function findAllUsers() {
+            var url =  "/api/v1/users";
+            return $http.get(url)
+                .then(function (response) {
+                    console.log(response);
+                    return response.data;
+                });
+        }
+
         function findUserById(userId) {
             var url = `/api/v1/user/${userId}`;
             return $http.get(url);

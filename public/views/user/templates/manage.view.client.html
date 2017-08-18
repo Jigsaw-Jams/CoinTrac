@@ -1,0 +1,42 @@
+<navbar></navbar>
+
+<div class="container">
+
+    <div class="panel panel-default with-nav-tabs">
+            <div class="panel-heading">
+                Manage all users.
+            </div>
+        
+            <div class="panel-body">
+        
+                <table ng-show="model.allUsers.length" class="table">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>date created</th>
+                            <th>edit</th>
+                        </tr>                         
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="user in model.allUsers">
+                            <td>{{user.email}}</td>
+                            <td>{{user.username}}</td>
+                            <td>{{user.created}}</td>
+                            <td>
+                                <button ng-click="model.setEditUser(user)"
+                                        data-toggle="modal"
+                                        data-target="#edit-user-modal"
+                                        class="btn btn-xs btn-warning">Edit
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+            </div>
+    </div>
+
+    <div ng-include src="'./views/user/templates/manage-modal.view.client.html'"></div>
+
+</div>

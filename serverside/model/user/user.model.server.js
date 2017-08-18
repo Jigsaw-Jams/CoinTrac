@@ -7,6 +7,7 @@ var userModel = mongoose.model("UserModel", userSchema);
 userModel.createUser = createUser;
 userModel.findUserByCredentials = findUserByCredentials;
 userModel.findUserByUsername = findUserByUsername;
+userModel.findAllUsers = findAllUsers;
 userModel.findUserByEmail = findUserByEmail;
 userModel.findUserByGoogleId = findUserByGoogleId;
 userModel.findUserById = findUserById;
@@ -72,6 +73,11 @@ function findUserById(userId) {
  */
 function findUserByEmail(email) {
     return userModel.findOne({email: email});
+}
+
+function findAllUsers() {
+    console.log('all users');
+    return userModel.find({});
 }
 
 

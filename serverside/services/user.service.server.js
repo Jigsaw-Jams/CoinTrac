@@ -16,6 +16,7 @@ app.post  ("/api/v1/login", passport.authenticate('local'), login);
 app.post  ("/api/v1/logout", logout);
 app.get   ("/api/v1/checkLogin", checkLogin);
 app.get   ("/api/v1/user", findUser);
+app.get   ("/api/v1/users", findAllUsers);
 app.get   ("/api/v1/user/:userId", findUserById);
 app.put   ("/api/v1/user/:userId", updateUser);
 app.delete("/api/v1/user/:userId", deleteUser);
@@ -141,7 +142,6 @@ function checkLogin(req, res) {
 function findUser(req, res) {
     var username = req.query.username;
     var email = req.query.email;
-    var password = req.query.password;
 
     if (username) {
         userModel
@@ -152,8 +152,31 @@ function findUser(req, res) {
                 console.log(err);
                 res.sendStatus(500);
             });
+    } else if (email) {
+        userModel
+            .findUserByEmail(email)
+            .then(function (user) {
+                res.send(user);
+            }, function (err) {
+                console.log(err);
+                res.sendStatus(500);
+            });
     }
 }
+
+
+function findAllUsers (req, res) {
+    userModel
+        .findAllUsers()
+        .then(function (users) {
+            console.log(users);
+            res.send(users);
+        }, function (err) {
+             console.log(err);
+             res.sendStatus(500);
+        });
+}
+
 
 
 function findUserById(req, res) {
@@ -171,11 +194,11 @@ function findUserById(req, res) {
 function updateUser(req, res) {
     var userId = req.params.userId;
     var user = req.body;
+    user.password = bcrypt.hashSync(user.password);
 
     userModel
         .updateUser(userId, user)
         .then(function (user) {
-            console.log(user);
             res.sendStatus(200);
         }, function(err) {
             console.log(err);

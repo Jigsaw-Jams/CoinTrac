@@ -23,26 +23,35 @@
                     navbarModel.signupErrorMessage = "Sorry you must use a valid email address.";
                 } else {
                     UserService
-                        .findUserByUsername(user.username)
+                        .findUserByEmail(user.email)
                         .then(function (foundUser) {
                             if (foundUser) {
-                                navbarModel.signupErrorMessage = "Sorry this username is already taken, try another.";
-                                $('#signup-username').addClass('has-error');
-                            } else if (user.password != user.password2) {
-                                $('#signup-password').addClass('has-error');
-                                $('#signup-password2').addClass('has-error');
-                                navbarModel.signupErrorMessage = "Sorry the passwords do not match.";
+                                navbarModel.signupErrorMessage = "Sorry this email is already taken, try another.";
+                                $('#signup-email').addClass('has-error');
                             } else {
-                                user.preferredCurrency = 'USD';
                                 UserService
-                                    .createUser(user)
-                                    .then(function (response) {
-                                        $rootScope.currentUser = response.data;
-                                        login(user);
-                                        $('.modal').modal('hide');
-                                    });                          
+                                    .findUserByUsername(user.username)
+                                    .then(function (foundUser) {
+                                        if (foundUser) {
+                                            navbarModel.signupErrorMessage = "Sorry this username is already taken, try another.";
+                                            $('#signup-username').addClass('has-error');
+                                        } else if (user.password != user.password2) {
+                                            $('#signup-password').addClass('has-error');
+                                            $('#signup-password2').addClass('has-error');
+                                            navbarModel.signupErrorMessage = "Sorry the passwords do not match.";
+                                        } else {
+                                            user.preferredCurrency = 'USD';
+                                            UserService
+                                                .createUser(user)
+                                                .then(function (response) {
+                                                    $rootScope.currentUser = response.data;
+                                                    login(user);
+                                                    $('.modal').modal('hide');
+                                                });                          
+                                        }
+                                    })          
                             }
-                        })
+                        });
                 }                
             }
             

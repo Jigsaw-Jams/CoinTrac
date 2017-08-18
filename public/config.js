@@ -37,7 +37,34 @@
                 resolve: {
                     currentUser: protectBehindLogin
                 }
+            })
+            // ------- Manage --------
+            .when("/manage", {
+                templateUrl : "views/user/templates/manage.view.client.html",
+                controller: "ManageController",
+                controllerAs: "model",
+                resolve: {
+                    currentUser: isAdmin
+                }
             });
+
+            function isAdmin(UserService, $q, $location) {
+                var deferred = $q.defer();
+                
+                UserService
+                    .checkLogin()
+                    .then(function (user) {
+                        if (user != '0' && user.isAdmin) {
+                            console.log('resolving good');
+                            deferred.resolve(user);
+                        } else {
+                            deferred.reject();
+                            $location.url("/");
+                        }
+                    });
+                
+                return deferred.promise;
+            }
 
 
             // Return the currently logged in user, for changing context of things that can
