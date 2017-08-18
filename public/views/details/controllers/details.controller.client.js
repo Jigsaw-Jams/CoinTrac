@@ -3,12 +3,12 @@
         .module("CoinTrac")
         .controller("DetailsController", DetailsController);
 
-        function DetailsController(DetailsService, $routeParams) {
+        function DetailsController(CoinmarketcapService, $routeParams) {
             var model = this;
             var coinId = $routeParams['coinId'];
 
             function init() {
-                DetailsService.getCoinDetails(coinId)
+                CoinmarketcapService.getCoinDetails(coinId)
                     .then(function (coinDetails) {
                         model.coinDetails = coinDetails;
                     })

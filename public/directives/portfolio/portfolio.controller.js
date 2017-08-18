@@ -3,7 +3,7 @@
         .module("coinTracDirectives")
         .controller("PortfolioController", PortfolioController);
 
-        function PortfolioController($rootScope, $scope, HoldingService, HomeService, DetailsService) {
+        function PortfolioController($rootScope, $scope, HoldingService, CoinmarketcapService) {
             var portfolioModel = this;
             
             portfolioModel.createHolding = createHolding;
@@ -29,7 +29,7 @@
                 getPortfolio();                    
 
                 /* Get all available coins for the search/autocomplete functionality */
-                HomeService
+                CoinmarketcapService
                     .getSearchSource()
                     .then(function (searchSource) {
                         $("#coin-name").autocomplete({
@@ -116,7 +116,7 @@
                     });
             }
             function calculateValueOfHoldings(holdings) {
-                return DetailsService
+                return CoinmarketcapService
                     .calculateValueOfHoldings(holdings)
                     .then(function (value) {
                         portfolioModel.value = value;

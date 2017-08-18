@@ -23,7 +23,6 @@
             return $http.get(url);
         }
 
-
         function updateHolding(holdingId, holding) {
             var url = "/api/v1/holding/" + holdingId;
             return $http.put(url, holding);

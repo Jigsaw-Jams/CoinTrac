@@ -3,7 +3,7 @@
         .module("CoinTrac")
         .controller("HomeController", HomeController);
 
-        function HomeController($location, $rootScope, $scope, currentUser, HomeService, UserService) {
+        function HomeController($location, $rootScope, $scope, currentUser, CoinmarketcapService, UserService) {
             var model = this;
 
             function init() {
@@ -11,13 +11,13 @@
                 model.currentUser = $rootScope.currentUser;
                 
                 // Get the entire definition of the top 12 currencies
-                HomeService.getCoins(12)
+                CoinmarketcapService.getCoins(12)
                     .then(function (coins) {
                         model.topTwelve = coins;
                     });
                 
                 // Get all available coin ids for the search functionality
-                HomeService.getSearchSource()
+                CoinmarketcapService.getSearchSource()
                     .then(function (searchSource) {
                         $("#search").autocomplete({
                             source: searchSource,

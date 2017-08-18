@@ -3,7 +3,7 @@
         .module("CoinTrac")
         .controller("ProfileController", ProfileController);
 
-        function ProfileController($routeParams, $rootScope, $route, UserService, HomeService, currentUser) {
+        function ProfileController($routeParams, $rootScope, $route, UserService, CoinmarketcapService, currentUser) {
             var model = this;
             model.currentUser = currentUser;
             console.log(currentUser);
@@ -23,7 +23,7 @@
                 }
 
                 // Get all available coin ids for the search functionality
-                HomeService.getSearchSource()
+                CoinmarketcapService.getSearchSource()
                     .then(function (searchSource) {
                         $("#watchlist-search").autocomplete({
                             source: searchSource,
