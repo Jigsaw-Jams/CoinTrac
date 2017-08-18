@@ -238,7 +238,7 @@ function addCoinToWatchlist(req, res) {
 
 function removeCoinFromWatchlist(req, res) {
     var userId = req.params.userId;
-    var coinid = req.params.coinId;
+    var coinId = req.params.coinId;
 
     userModel
         .removeCoinFromWatchlist(userId, coinId)

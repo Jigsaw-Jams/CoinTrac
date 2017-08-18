@@ -160,12 +160,14 @@ function addCoinToWatchlist(userId, coinId) {
 
 function removeCoinFromWatchlist(userId, coinId) {
     return userModel
-        .findUserById(userid)
+        .findUserById(userId)
         .then(function (user) {
-            var index = user.watchlist.indexOf(holdingId);
+            var index = user.watchlist.indexOf(coinId);
             user.watchlist.splice(index, 1);
             return user.save();
-        })
+        }, function (err) {
+            console.log(err);
+        });
 }
 
 

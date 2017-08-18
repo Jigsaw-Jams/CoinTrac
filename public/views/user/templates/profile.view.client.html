@@ -24,19 +24,23 @@
 
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    {{model.currentUser.username}}'s Watch List
+                    <h3 class="panel-title">{{model.currentUser.username}}'s Watch List</h3>
                 </div>
-                <div class="panel-body">
-                    <ul>
-                        <li ng-repeat="coin in model.currentUser.watchlist">{{coin}}</li>
+                <!-- <div class="panel-body"> -->
+                    <ul class="list-group">
+                        <a class="list-group-item" ng-repeat="coin in model.currentUser.watchlist">
+                            <div class="row">
+                                <div class="col-xs-10">{{coin}}</div>
+                                <div class="col-xs-2">
+                                    <button ng-click="model.removeCoinFromWatchlist(coin)" class="btn btn-xs btn-danger btn-outline">Remove</button>
+                                </div>
+                            </div>
+                        </a>
                     </ul>
-                </div>
+                <!-- </div> -->
             </div>
         </div>
     </div>
-
-
-
 
 
 

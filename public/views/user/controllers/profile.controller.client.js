@@ -5,6 +5,7 @@
 
         function ProfileController($routeParams, $rootScope, $route, UserService, CoinmarketcapService, currentUser) {
             var model = this;
+            model.removeCoinFromWatchlist = removeCoinFromWatchlist;
             
             function init() {
                 model.currentUser = currentUser;
@@ -46,6 +47,15 @@
 
             }
             init();
+
+            function removeCoinFromWatchlist(coinId) {
+                UserService
+                    .removeCoinFromWatchlist(model.currentUser._id, coinId)
+                    .then(function (data) {
+                        console.log(data);
+                        $route.reload();
+                    })
+            }
             
         }
 
