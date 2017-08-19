@@ -117,7 +117,6 @@
                     .calculateValueOfHoldings(holdings)
                     .then(function (value) {
                         portfolioModel.value = value;
-                        console.log(value);
                         return value;
                     });
             }

@@ -55,7 +55,6 @@
                     .checkLogin()
                     .then(function (user) {
                         if (user != '0' && user.isAdmin) {
-                            console.log('resolving good');
                             deferred.resolve(user);
                         } else {
                             deferred.reject();

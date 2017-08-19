@@ -55,8 +55,6 @@ function updateHolding(req, res) {
 
 function deleteHolding(req, res) {
     var holdingId = req.params.holdingId;
-    console.log('woag');
-    console.log(holdingId);
 
     holdingModel
         .deleteHolding(holdingId)
