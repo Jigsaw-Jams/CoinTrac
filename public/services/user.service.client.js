@@ -81,6 +81,8 @@
 
         function updateUser(userId, user) {
             var url = `/api/v1/user/${userId}`;
+            delete user.password;
+            
             return $http.put(url, user)
                 .then(function (response) {
                     return response.data;

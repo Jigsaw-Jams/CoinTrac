@@ -193,7 +193,10 @@ function findUserById(req, res) {
 function updateUser(req, res) {
     var userId = req.params.userId;
     var user = req.body;
-    user.password = bcrypt.hashSync(user.password);
+
+    if (user.password) {
+        user.password = bcrypt.hashSync(user.password);
+    }
 
     userModel
         .updateUser(userId, user)
