@@ -27,7 +27,7 @@
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="" data-target="#topTwelve" aria-controls="topTwelve" role="tab" data-toggle="tab">Top Twelve</a></li>
             <li ng-show="model.currentUser" role="presentation"> <a href="" data-target="#lists" aria-controls="lists" role="tab" data-toggle="tab">Following Watch Lists</a></li>
-            <li role="presentation"> <a href="" data-target="#userList" aria-controls="userList" role="tab" data-toggle="tab">Users</a></li>
+            <li ng-show="model.currentUser" role="presentation"> <a href="" data-target="#userList" aria-controls="userList" role="tab" data-toggle="tab">Users</a></li>
         </ul>
     </div>
     <div class="panel-body">
@@ -46,14 +46,26 @@
                             <div class="panel-body">
                                 <h2>${{coin.price_usd}}</h2>
                                 <strong ng-class="{ 'text-danger': coin.percent_change_24h < 0, 'text-success': coin.percent_change_24h >= 0}">[{{coin.percent_change_24h}}%]</strong>
-                                
                             </div>
                         </div>  
                     </div>
                 </div>
             </div>
 
-            <div ng-show="model.currentUser" role="tabpanel" class="tab-pane" id="lists">lists</div>
+            <div ng-show="model.currentUser" role="tabpanel" class="tab-pane" id="lists">
+                <div ng-repeat="list in model.followingLists" class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Followers Watch List</h3>
+                    </div>
+                    <ul class="list-group">
+                        <a class="list-group-item" ng-repeat="coin in list">
+                            <div class="row">
+                                <div class="col-xs-12">{{coin}}</div>
+                            </div>
+                        </a>
+                    </ul>
+                </div>
+            </div>
 
             <div role="tabpanel" class="tab-pane" id="userList">
                     <ul class="list-group">

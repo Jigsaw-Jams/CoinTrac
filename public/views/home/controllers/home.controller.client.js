@@ -31,19 +31,18 @@
                         });
                     });
 
-        
-                UserService.getUserlist(model.currentUser)
-                    .then(function (userList) {
-                        model.userList = userList;
-                    })
-
-                // if (model.currentUser) {
-                //     UserService
-                //        .getFollowingLists(model.currentUser._id)
-                //         .then(function (followingLists) {
-                //             model.followingLists = followingLists;
-                //         });
-                // }
+                if (model.currentUser) {
+                    UserService.getUserlist(model.currentUser)
+                        .then(function (userList) {
+                            model.userList = userList;
+                       });
+    
+                    UserService
+                       .getFollowingLists(model.currentUser._id)
+                        .then(function (followingLists) {
+                            model.followingLists = followingLists;
+                        });
+                }
                     
                 $('#myTabs a').click(function (e) {
                     e.preventDefault()

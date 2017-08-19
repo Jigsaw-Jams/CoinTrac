@@ -130,24 +130,25 @@
         function getFollowingLists(userId) {
             var promises = [];
             var followingLists = [];
-
-            findUserById(userId)
-                .then(function (user) {
+            
+            return findUserById(userId)
+                .then(function (userdata) {
+                    var user = userdata.data;
                     for (u in user.following) {
                         var following = user.following[u];
-                        
+
                         (function (currentFollowing) {
                             promises.push(findUserById(currentFollowing)
-                                .then(function (currUser) {
-                                    followingLists.push(currUser.watchlist);
-                                }))
+                                .then(function (currUserData) {
+                                    followingLists.push(currUserData.data.watchlist);
+                                }));
                         })(following);
 
                     }
 
                     return Promise.all(promises)
                         .then(function (data) {
-                            return folllowingLists;
+                            return followingLists;
                         });
 
                 })
