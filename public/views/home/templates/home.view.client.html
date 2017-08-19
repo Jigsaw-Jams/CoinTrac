@@ -13,7 +13,7 @@
 
     <div ng-show="!model.currentUser">
         <p>Welcome to CoinTrac, an easy to use Cryptocurrency portfolio management system.</p>
-        <p>You can search and view top coin stats witout an account</p>
+        <p>You can search and view top coin stats without an account.</p>
         <p>Sign up to begin your portfolio!</p>
     </div>
 
@@ -26,7 +26,8 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="" data-target="#topTwelve" aria-controls="topTwelve" role="tab" data-toggle="tab">Top Twelve</a></li>
-            <li ng-show="model.currentUser" role="presentation"> <a href="" data-target="#lists" aria-controls="lists" role="tab" data-toggle="tab">Watch Lists</a></li>
+            <li ng-show="model.currentUser" role="presentation"> <a href="" data-target="#lists" aria-controls="lists" role="tab" data-toggle="tab">Following Watch Lists</a></li>
+            <li role="presentation"> <a href="" data-target="#userList" aria-controls="userList" role="tab" data-toggle="tab">Users</a></li>
         </ul>
     </div>
     <div class="panel-body">
@@ -51,12 +52,23 @@
                     </div>
                 </div>
             </div>
+
             <div ng-show="model.currentUser" role="tabpanel" class="tab-pane" id="lists">lists</div>
+
+            <div role="tabpanel" class="tab-pane" id="userList">
+                    <ul class="list-group">
+                        <li ng-repeat="user in model.userList" class="list-group-item row">
+                            <div class="col-xs-9">{{user.username}}</div>
+                            <div class="col-xs-3">
+                                <button ng-hide="user.isFollowing" ng-click="model.followUser(user.username)" class="btn btn-xs btn-primary btn-outline pull-right">follow</button>
+                                <button ng-show="user.isFollowing" ng-click="model.unfollowUser(user.username)" class="btn btn-xs btn-primary pull-right">unfollow</button>
+                            </div>
+                        </li>
+                    </ul>
+            </div>
         </div>
     </div>
 
-
-    
 
     <hr>
 

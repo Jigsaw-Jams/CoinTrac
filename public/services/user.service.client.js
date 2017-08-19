@@ -11,9 +11,14 @@
             "findUserByUsername" : findUserByUsername,
             "findUserByEmail" : findUserByEmail,
             "findAllUsers" : findAllUsers,
+            "getAllUsernames" : getAllUsernames,
             "findUserById" : findUserById,
             "checkLogin" : checkLogin,
             "updateUser" : updateUser,
+            "followUser": followUser,
+            "unfollowUser": unfollowUser,
+            "isFollowing": isFollowing,
+            "getUserlist": getUserlist,
             "deleteUser" : deleteUser,
             "addCoinToWatchlist": addCoinToWatchlist,
             "removeCoinFromWatchlist" : removeCoinFromWatchlist,
@@ -27,7 +32,6 @@
         }
 
         function login(email, password) {
-            console.log('logging ing');
             var url = "/api/v1/login";
             return $http.post(url, {email: email, password: password});
         }
@@ -57,7 +61,6 @@
             var url =  "/api/v1/users";
             return $http.get(url)
                 .then(function (response) {
-                    console.log(response);
                     return response.data;
                 });
         }
@@ -99,6 +102,31 @@
             return $http.delete(url);
         }
 
+
+        function followUser(userId, followedId) {
+            var url = `/api/v1/user/${userId}/following/${followedId}`;
+            return $http.put(url);
+        }
+
+        function unfollowUser(userId, unfollowedId) {
+            var url = `/api/v1/user/${userId}/following/${unfollowedId}`;
+            return $http.delete(url);
+        }
+
+
+        function getAllUsernames() {
+            var usernames = [];
+
+            return findAllUsers()
+                .then(function (users) {
+                    for (u in users) {
+                        usernames.push(users[u].username);
+                    }
+                    return usernames;
+                })
+        }
+
+
         function getFollowingLists(userId) {
             var promises = [];
             var followingLists = [];
@@ -125,6 +153,43 @@
                 })
             
         }
+
+
+        function getUserlist(user) {
+            return getAllUsernames()
+                .then(function (usernames) {
+                    var promises = [];
+                    var userList = [];
+
+                    for (u in usernames) {
+                        (function (currentUsername) {
+                            promises.push(isFollowing(user, currentUsername)
+                                .then(function (value) {
+                                    var tmp  = {
+                                        username: currentUsername,
+                                        isFollowing : value
+                                    }
+                                    userList.push(tmp);
+                                }));
+
+                        })(usernames[u]);
+                    }
+
+                    return Promise.all(promises)
+                        .then(function (data) { return userList; }
+                    );
+                });
+        }
+
+
+        // is user following user with username
+        function isFollowing(user, username) {
+            return findUserByUsername(username)
+                .then(function (foundUser) {
+                    return user.following.includes(foundUser._id);
+                });
+        }
+
 
     }
 })();

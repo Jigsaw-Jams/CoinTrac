@@ -4,7 +4,7 @@ var userSchema = mongoose.Schema(
     {
         email            : { type: String, unique: true, required: true },
         isAdmin          : Boolean,
-        username         : String,
+        username         : { type: String, unique: true, required: true },
         password         : String,
         preferredCurrency: String,
         portfolio        : [{ type: mongoose.Schema.Types.ObjectId, ref: "HoldingModel"}],

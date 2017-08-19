@@ -3,8 +3,10 @@
         .module("CoinTrac")
         .controller("HomeController", HomeController);
 
-        function HomeController($location, $rootScope, $scope, currentUser, CoinmarketcapService, UserService) {
+        function HomeController($location, $rootScope, $route, $scope, currentUser, CoinmarketcapService, UserService) {
             var model = this;
+            model.followUser = followUser;
+            model.unfollowUser = unfollowUser;
 
             function init() {
                 $rootScope.currentUser = currentUser;
@@ -29,6 +31,12 @@
                         });
                     });
 
+        
+                UserService.getUserlist(model.currentUser)
+                    .then(function (userList) {
+                        model.userList = userList;
+                    })
+
                 // if (model.currentUser) {
                 //     UserService
                 //        .getFollowingLists(model.currentUser._id)
@@ -44,6 +52,32 @@
                     
             }
             init();
+
+
+            function followUser(username) {
+                UserService
+                    .findUserByUsername(username)
+                    .then(function (user) {
+                        return UserService
+                            .followUser(model.currentUser._id, user._id)
+                            .then(function () {
+                                $route.reload();
+                            });
+                    });
+            }
+
+            function unfollowUser(username) {
+                UserService
+                    .findUserByUsername(username)
+                    .then(function (user) {
+                        return UserService
+                            .unfollowUser(model.currentUser._id, user._id)
+                            .then(function () {
+                                $route.reload();
+                            });
+                    });
+            }
+
 
         }
 })();

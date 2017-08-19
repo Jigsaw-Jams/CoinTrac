@@ -20,6 +20,8 @@ app.get   ("/api/v1/users", findAllUsers);
 app.get   ("/api/v1/user/:userId", findUserById);
 app.put   ("/api/v1/user/:userId", updateUser);
 app.delete("/api/v1/user/:userId", deleteUser);
+app.put   ("/api/v1/user/:userId/following/:followedId", followUser);
+app.delete("/api/v1/user/:userId/following/:unfollowedId", unfollowUser);
 app.put   ("/api/v1/user/:userId/watchlist/:coinId", addCoinToWatchlist);
 app.delete("/api/v1/user/:userId/watchlist/:coinId", removeCoinFromWatchlist);
 app.get   ("/auth/google", passport.authenticate('google', {scope : ['profile', 'email']}));
@@ -112,7 +114,6 @@ function createUser(req, res) {
         .then(function (user) {
             res.send(user);
         }, function (err) {
-            console.log('error creating user');
             console.log(err);
             res.sendStatus(500);
         });
@@ -168,7 +169,6 @@ function findAllUsers (req, res) {
     userModel
         .findAllUsers()
         .then(function (users) {
-            console.log(users);
             res.send(users);
         }, function (err) {
              console.log(err);
@@ -221,7 +221,6 @@ function deleteUser(req, res) {
 
 
 function addCoinToWatchlist(req, res) {
-    console.log('add it');
     var userId = req.params.userId;
     var coinId = req.params.coinId;
 
@@ -247,4 +246,33 @@ function removeCoinFromWatchlist(req, res) {
         }, function (err) {
             res.sendStatus(500);
         })
+}
+
+
+
+function followUser(req, res) {
+    var userId = req.params.userId;
+    var followedId = req.params.followedId;
+
+    userModel
+        .followUser(userId, followedId)
+        .then(function () {
+            res.sendStatus(200);
+        }, function (err) {
+            res.sendStatus(500).message(err);
+        });
+}
+
+
+function unfollowUser(req, res) {
+    var userId = req.params.userId;
+    var unfollowedId = req.params.unfollowedId;
+
+    userModel
+        .unfollowUser(userId, unfollowedId)
+        .then(function () {
+            res.sendStatus(200);
+        }, function (err) {
+            res.sendStatus(500).message(err);
+        });    
 }

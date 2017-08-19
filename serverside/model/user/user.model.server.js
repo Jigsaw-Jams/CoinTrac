@@ -17,7 +17,8 @@ userModel.updateUser = updateUser;
 userModel.deleteUser = deleteUser;
 userModel.addCoinToWatchlist = addCoinToWatchlist;
 userModel.removeCoinFromWatchlist = removeCoinFromWatchlist;
-userModel.addFollowing = addFollowing;
+userModel.followUser = followUser;
+userModel.unfollowUser = unfollowUser;
 module.exports = userModel;
 
 
@@ -80,7 +81,6 @@ function findUserByEmail(email) {
 }
 
 function findAllUsers() {
-    console.log('all users');
     return userModel.find({});
 }
 
@@ -171,19 +171,39 @@ function removeCoinFromWatchlist(userId, coinId) {
 }
 
 
-function addFollowing(userId, followingId) {
-    return userModel
-    .findUserById(userId)
+function followUser(userId, followedId) {
+    return userModel.update({_id: userId}, {$addToSet: {following: followedId}})
         .then(function (user) {
-            var index = user.following.indexOf(followingId);
-
-            if(index === -1) {
-                user.following.push(followingId)
-                return user.save();
-            } else {
-                return user;
-            }
-        }, function (err) {
-            console.log(err);
+            return userModel.update({_id: followedId}, {$addToSet: {followers: userId}})
         });
 }
+
+function unfollowUser(userId, unfollowedId) {
+    console.log(userId);
+    console.log(unfollowedId);
+    
+    return userModel.update({_id: userId}, {$pull: {following: unfollowedId}})
+        .then(function (user) {
+            return userModel.update({_id: unfollowedId}, {$pull: {followers: userId}})
+        });
+}
+
+// function unfollowUser(userId, unfollowedId) {
+//     return userModel
+//         .findUserById(userId)
+//         .then(function (user) {
+//             if (user.following.includes(unfollowedId)) {
+//                 var index = user.following.indexOf(unffollowedId);
+//                 user.following.splice(index, 1);
+//                 user.save();                
+//                 return userModel.findUserById(unfollowedId);
+//             } 
+//         }, function (err) { console.log(err);})
+//         .then(function (user) {
+//             if (user.followers.includes(userId)) {
+//                 var index = user.followers.indexOf(userId);
+//                 user.followers.splice(index, 1);
+//                 return user.save();                
+//             } 
+//         }, function (err) { console.log(err);});
+// }
