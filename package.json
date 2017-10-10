@@ -1,7 +1,7 @@
 {
   "name": "project",
   "version": "1.0.0",
-  "description": "Final project for CS 4550",
+  "description": "A cryptocurrency portfolio management system.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\""
